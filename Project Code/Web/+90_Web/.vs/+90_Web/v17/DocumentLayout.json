@@ -1,0 +1,279 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\migrations\\20260817134839_addsubscriptionstable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\migrations\\20260817134839_addsubscriptionstable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\controllers\\subscriptionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\controllers\\subscriptionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\appdbcontext\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\appdbcontext\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\models\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\models\\subscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\controllers\\customerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\controllers\\customerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\models\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\models\\device.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\models\\device.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\controllers\\devicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\controllers\\devicescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\controllers\\branchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\controllers\\branchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\models\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\models\\branch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|c:\\users\\workstation\\onedrive\\desktop\\plus ninety ps\\project code\\web\\\u002B90_web\\\u002B90_web\\migrations\\20260816011917_updatemodelsconstraints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D7C036B-84C9-40C5-8F03-581908CB9157}|\u002B90_Web\\\u002B90_Web.csproj|solutionrelative:\u002B90_web\\migrations\\20260816011917_updatemodelsconstraints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 285,
+          "SelectedChildIndex": 11,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260817134839_AddSubscriptionsTable.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Migrations\\20260817134839_AddSubscriptionsTable.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Migrations\\20260817134839_AddSubscriptionsTable.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Migrations\\20260817134839_AddSubscriptionsTable.cs",
+              "RelativeToolTip": "\u002B90_Web\\Migrations\\20260817134839_AddSubscriptionsTable.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAwwEAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T13:48:40.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SubscriptionsController.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\SubscriptionsController.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Controllers\\SubscriptionsController.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\SubscriptionsController.cs",
+              "RelativeToolTip": "\u002B90_Web\\Controllers\\SubscriptionsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T13:48:15.511Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Subscription.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Subscription.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Models\\Subscription.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Subscription.cs",
+              "RelativeToolTip": "\u002B90_Web\\Models\\Subscription.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T13:46:26.023Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Controllers\\ProductsController.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "\u002B90_Web\\Controllers\\ProductsController.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAowDcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T13:42:00.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CustomersController.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\CustomersController.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Controllers\\CustomersController.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\CustomersController.cs",
+              "RelativeToolTip": "\u002B90_Web\\Controllers\\CustomersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T13:41:28.135Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "DevicesController.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\DevicesController.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Controllers\\DevicesController.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\DevicesController.cs",
+              "RelativeToolTip": "\u002B90_Web\\Controllers\\DevicesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T13:27:11.434Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Program.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Program.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Program.cs",
+              "RelativeToolTip": "\u002B90_Web\\Program.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAADwvygAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T01:12:57.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\appsettings.json",
+              "RelativeDocumentMoniker": "\u002B90_Web\\appsettings.json",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\appsettings.json",
+              "RelativeToolTip": "\u002B90_Web\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-16T00:56:34.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Context.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\AppDbContext\\Context.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\AppDbContext\\Context.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\AppDbContext\\Context.cs",
+              "RelativeToolTip": "\u002B90_Web\\AppDbContext\\Context.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T00:53:26.004Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Models\\Product.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Product.cs",
+              "RelativeToolTip": "\u002B90_Web\\Models\\Product.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBMAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T00:41:33.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Customer.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Models\\Customer.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Customer.cs",
+              "RelativeToolTip": "\u002B90_Web\\Models\\Customer.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAABcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T00:41:10.778Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Branch.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Branch.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Models\\Branch.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Branch.cs",
+              "RelativeToolTip": "\u002B90_Web\\Models\\Branch.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T00:40:13.92Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Device.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Device.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Models\\Device.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Models\\Device.cs",
+              "RelativeToolTip": "\u002B90_Web\\Models\\Device.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T00:40:47.813Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "BranchesController.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\BranchesController.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Controllers\\BranchesController.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Controllers\\BranchesController.cs",
+              "RelativeToolTip": "\u002B90_Web\\Controllers\\BranchesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T01:22:01.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "20260816011917_UpdateModelsConstraints.cs",
+              "DocumentMoniker": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Migrations\\20260816011917_UpdateModelsConstraints.cs",
+              "RelativeDocumentMoniker": "\u002B90_Web\\Migrations\\20260816011917_UpdateModelsConstraints.cs",
+              "ToolTip": "C:\\Users\\workstation\\OneDrive\\Desktop\\PLUS NINETY PS\\Project Code\\Web\\\u002B90_Web\\\u002B90_Web\\Migrations\\20260816011917_UpdateModelsConstraints.cs",
+              "RelativeToolTip": "\u002B90_Web\\Migrations\\20260816011917_UpdateModelsConstraints.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-16T01:19:17.698Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

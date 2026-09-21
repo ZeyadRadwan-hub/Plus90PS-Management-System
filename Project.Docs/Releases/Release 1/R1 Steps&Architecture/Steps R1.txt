@@ -1,0 +1,43 @@
+1. Discovery Finalization
+        ↓
+2. Business Rules Finalization
+        ↓
+3. BRD
+        ↓
+4. R1 PRD
+        ↓
+5. Functional + Non-Functional Requirements
+        ↓
+6. User Stories + Acceptance Criteria
+        ↓
+7. UX Flows
+        ↓
+8. UI Review / Design System
+        ↓
+9. System Analysis
+        ↓
+10. Use Cases
+        ↓
+11. Activity / State / Sequence
+        ↓
+12. Architecture + C4
+        ↓
+13. Database + ERD + Data Dictionary
+        ↓
+14. API Specification
+        ↓
+15. Security + Threat Model
+        ↓
+16. Offline / Sync Detailed Architecture
+        ↓
+17. Testing Strategy
+        ↓
+18. Deployment / Backup / Monitoring Design
+        ↓
+19. Full R1 Review
+        ↓
+PRE-CODE GATE ✅
+        ↓
+أنت: "ابدأ الكود"
+        ↓
+Codex

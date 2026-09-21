@@ -1,0 +1,338 @@
+[
+  {
+    "file": "MASTER.md",
+    "section": "# 44. Offline-First Architecture",
+    "before": "# 44. Offline-First Architecture\n\nThe branch must function if the Internet disappears.\n\nTarget architecture:\n\n```text\n                     CENTRAL SERVER\n\n                +-------------------+\n                | ASP.NET Core API  |\n                +---------+---------+\n                          |\n                          v\n                +-------------------+\n                | Central SQL Server|\n                +-------------------+\n                          ^\n                          |\n                    Synchronization\n                          ^\n                          |\n                       Internet\n                          ^\n                          |\n                +-------------------+\n                | Sync Engine       |\n                +---------+---------+\n                          ^\n                          |\n                +-------------------+\n                | Local SQLite      |\n                +---------+---------+\n                          ^\n                          |\n                +-------------------+\n                | WPF Desktop App   |\n                +-------------------+\n```\n\n---\n\n",
+    "after": "# 44. Offline-First Architecture\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 45. Online Mode",
+    "before": "# 45. Online Mode\n\nNormal flow:\n\n```text\nWPF\n  ↓\nApplication Layer\n  ↓\nAPI\n  ↓\nCentral Database\n```\n\nLocal storage can still maintain local operational state and synchronization information.\n\n---\n\n",
+    "after": "# 45. Online Mode\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 46. Offline Mode",
+    "before": "# 46. Offline Mode\n\nWhen Internet is unavailable:\n\n```text\nWPF\n  ↓\nLocal Application Logic\n  ↓\nLocal SQLite\n```\n\nThe branch must continue core operations according to the offline policy.\n\n---\n\n",
+    "after": "# 46. Offline Mode\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 53. Online Architecture",
+    "before": "# 53. Online Architecture\n\n```text\nUser\n  ↓\nWPF\n  ↓\nAPI\n  ↓\nAuthentication\n  ↓\nAuthorization\n  ↓\nBusiness Validation\n  ↓\nEF Core\n  ↓\nSQL Server\n  ↓\nResponse\n  ↓\nWPF\n```\n\n---\n\n",
+    "after": "# 53. Online Architecture\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 54. Offline Architecture",
+    "before": "# 54. Offline Architecture\n\n```text\nUser\n  ↓\nWPF\n  ↓\nLocal Application Logic\n  ↓\nSQLite\n  ↓\nSync Queue\n```\n\n---\n\n",
+    "after": "# 54. Offline Architecture\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 115. Technical Flow — Session",
+    "before": "# 115. Technical Flow — Session\n\nOnline:\n\n```text\nCashier\n   ↓\nWPF Input\n   ↓\nViewModel\n   ↓\nApplication Use Case\n   ↓\nAPI Request\n   ↓\nAuthentication\n   ↓\nAuthorization\n   ↓\nBusiness Validation\n   ↓\nSession Service\n   ↓\nEF Core\n   ↓\nSQL Server\n   ↓\nResponse\n   ↓\nWPF\n   ↓\nUI Update\n```\n\nOffline:\n\n```text\nCashier\n   ↓\nWPF\n   ↓\nApplication Use Case\n   ↓\nLocal Validation\n   ↓\nSQLite\n   ↓\nSync Queue\n   ↓\nUI Update\n```\n\n---\n\n",
+    "after": "# 115. Technical Flow — Session\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 80. Offline Architecture",
+    "before": "# 80. Offline Architecture\n\nEach branch has:\n\n```text\nWPF\n+\nSQLite\n+\nSync Engine\n```\n\nCentral infrastructure:\n\n```text\nASP.NET Core API\n+\nSQL Server\n```\n\n---\n\n",
+    "after": "# 80. Offline Architecture\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 81. Online Flow",
+    "before": "# 81. Online Flow\n\n```text\nWPF\n  ↓\nAPI\n  ↓\nApplication Logic\n  ↓\nDatabase\n  ↓\nResult\n```\n\nThe API validates business and authorization rules.\n\n---\n\n",
+    "after": "# 81. Online Flow\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 82. Offline Flow",
+    "before": "# 82. Offline Flow\n\n```text\nWPF\n  ↓\nLocal Application Logic\n  ↓\nSQLite\n  ↓\nLocal Commit\n  ↓\nSync Queue\n```\n\nThe branch remains usable according to its offline policy.\n\n---\n\n",
+    "after": "# 82. Offline Flow\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 233. Final Offline Flow",
+    "before": "# 233. Final Offline Flow\n\n```text\nBranch Online\n   ↓\nNormal API Operation\n\nInternet Lost\n   ↓\nLocal SQLite\n   ↓\nContinue Approved Operations\n   ↓\nQueue Changes\n   ↓\nInternet Restored\n   ↓\nSync\n   ↓\nIdempotency\n   ↓\nConflict Check\n   ↓\nCentral Persistence\n   ↓\nAcknowledgment\n```\n\n---\n\n",
+    "after": "# 233. Final Offline Flow\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 25. Offline Requirement",
+    "before": "# 25. Offline Requirement\n\nOffline operation is a Core Release 1 Requirement.\n\nWhen Internet is unavailable:\n\n```text\nWPF\n   ↓\nLocal Application Logic\n   ↓\nSQLite\n```\n\nThe branch must continue approved core operations.\n\n---\n\n",
+    "after": "# 25. Offline Requirement\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 26. Online Requirement",
+    "before": "# 26. Online Requirement\n\nWhen Internet is available:\n\n```text\nWPF\n   ↓\nASP.NET Core API\n   ↓\nSQL Server\n```\n\n---\n\n",
+    "after": "# 26. Online Requirement\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 34. High-Level Architecture",
+    "before": "# 34. High-Level Architecture\n\n```text\n                    +--------------------+\n                    |   WPF Desktop      |\n                    +---------+----------+\n                              |\n                +-------------+-------------+\n                |                           |\n                v                           v\n         +-------------+              +-------------+\n         | SQLite      |              | ASP.NET     |\n         | Local DB    |              | Core API    |\n         +------+------+              +------+------+\n                |                            |\n                |                       +----+----+\n                |                       |         |\n                |                       v         v\n                |                  Business    Security\n                |                    Logic\n                |                       |\n                |                       v\n                |                +-------------+\n                |                | SQL Server  |\n                |                +-------------+\n                |\n                +---- Sync Engine ----> API\n```\n\n---\n\n",
+    "after": "# 34. High-Level Architecture\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 38. First Release Offline Flow",
+    "before": "# 38. First Release Offline Flow\n\n```text\nInternet Available\n      ↓\nNormal API operation\n\nInternet Lost\n      ↓\nLocal SQLite\n      ↓\nContinue Core Operations\n      ↓\nQueue Operations\n      ↓\nInternet Returns\n      ↓\nSynchronization\n      ↓\nCentral Verification\n```\n\n---\n\n",
+    "after": "# 38. First Release Offline Flow\n\n```text\nWPF → Local authorization + shared business rules\n    → SQLite transaction: operational record + pending sync operation\n    → Local success shown to cashier\n    → Sync when online → API authentication/branch validation/idempotency\n    → SQL Server transaction → acknowledgement → local sync status\n```\n\nقرار هندسي معتمد لهذه الخطة: عمليات الفرع الأساسية تكتب محليًا أولًا في الحالتين Online وOffline؛ الاتصال يغيّر توقيت المزامنة ولا يبدّل مكان إنشاء الفاتورة. التقرير المركزي والتهيئة المركزية لهما API، ولا يعني ذلك إعادة إرسال إنشاء الجلسة كعملية جديدة.\nالتفاصيل والحدود في [القرارات المشتركة](SHARED_RULES.md). المزامنة الناجحة تختلف عن نجاح الحفظ المحلي، وتظهر الحالتان للمستخدم.\n\n---\n\n",
+    "reason": "Unify branch operational writes and remove connectivity-based dual write paths (ADR-01)."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 68. Sequence Diagram — Start Session",
+    "before": "# 68. Sequence Diagram — Start Session\n\n```mermaid\nsequenceDiagram\n    participant C as Cashier\n    participant W as WPF\n    participant A as API\n    participant S as Session Service\n    participant D as SQL Server\n\n    C->>W: Select Console + Pricing\n    W->>A: Start Session Request\n    A->>A: Authenticate / Authorize\n    A->>S: Validate session start\n    S->>D: Create Session\n    D-->>S: Saved\n    S-->>A: Session Result\n    A-->>W: Success\n    W-->>C: Active Session\n```\n\nOffline variation:\n\n```text\nCashier\n   ↓\nWPF\n   ↓\nLocal SQLite\n   ↓\nSession Created Locally\n   ↓\nSync Queue\n```\n\n---\n\n",
+    "after": "# 68. Sequence Diagram — Start Session\n\n```mermaid\nsequenceDiagram\n    participant C as Cashier\n    participant W as WPF Use Case\n    participant L as SQLite\n    participant S as Sync\n    participant A as API\n    participant D as SQL Server\n    C->>W: Start session\n    W->>W: Local identity, branch, pricing and availability validation\n    W->>L: Commit session and outbox atomically\n    L-->>W: Local commit\n    W-->>C: Active session, pending sync\n    opt Connection available\n        S->>L: Read pending operation\n        S->>A: Send stable operation ID\n        A->>A: Authenticate, authorize, deduplicate, validate\n        A->>D: Commit accepted operation and receipt\n        D-->>A: Committed\n        A-->>S: Acknowledgement or visible rejection\n        S->>L: Update sync state without a second session\n    end\n```\n\nSee [ADR-01](SHARED_RULES.md). A central rejection does not erase a locally recorded payment.\n\n---\n\n",
+    "reason": "Align start-session sequence with atomic local write and asynchronous sync."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 78. Sequence Diagram — Start Session",
+    "before": "# 78. Sequence Diagram — Start Session\n\n```mermaid\nsequenceDiagram\n    participant C as Cashier\n    participant W as WPF\n    participant A as ASP.NET Core API\n    participant S as Session Service\n    participant D as SQL Server\n\n    C->>W: Select Console + Pricing\n    W->>A: Start Session Request\n    A->>A: Authenticate\n    A->>A: Authorize\n    A->>S: Validate Start\n    S->>D: Create Session\n    D-->>S: Saved\n    S-->>A: Session Result\n    A-->>W: Success\n    W-->>C: Active Session\n```\n\n---\n\n",
+    "after": "# 78. Sequence Diagram — Start Session\n\n```mermaid\nsequenceDiagram\n    participant C as Cashier\n    participant W as WPF Use Case\n    participant L as SQLite\n    participant S as Sync\n    participant A as API\n    participant D as SQL Server\n    C->>W: Start session\n    W->>W: Local identity, branch, pricing and availability validation\n    W->>L: Commit session and outbox atomically\n    L-->>W: Local commit\n    W-->>C: Active session, pending sync\n    opt Connection available\n        S->>L: Read pending operation\n        S->>A: Send stable operation ID\n        A->>A: Authenticate, authorize, deduplicate, validate\n        A->>D: Commit accepted operation and receipt\n        D-->>A: Committed\n        A-->>S: Acknowledgement or visible rejection\n        S->>L: Update sync state without a second session\n    end\n```\n\nSee [ADR-01](SHARED_RULES.md). A central rejection does not erase a locally recorded payment.\n\n---\n\n",
+    "reason": "Align start-session sequence with atomic local write and asynchronous sync."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 26. Hourly Pricing",
+    "before": "# 26. Hourly Pricing\n\nHourly pricing uses session duration.\n\nFinal business rules must define:\n\n```text\nStart timestamp\nEnd timestamp\nRounding\nMinimum charge unit\nPause behavior\nMultiple pause behavior\n```\n\nDo not implement a guessed rounding rule.\n\n---\n\n",
+    "after": "# 26. Hourly Pricing\n\nالمرجع الوحيد للحساب هو [BR-TIME-001 وBR-TIME-002](SHARED_RULES.md).\n\nOpen: يبدأ بلا نهاية محددة، وينتهي بطلب العميل. للوقت بالساعات نحسب المدة الفعلية أولًا، ثم نقرب **للأعلى فقط** إذا كان المتبقي إلى ربع الساعة التالي ثلاث دقائق أو أقل؛ خلاف ذلك نستخدم المدة الفعلية. المدة الموجودة بالفعل على علامة ربع ساعة تبقى كما هي.\n\nأمثلة بصيغة ساعات:دقائق: `2:27 → 2:30`، `2:20 → 2:20`، `2:42 → 2:45`، `2:57 → 3:00`. لا تقريب لأسفل ولا إهمال تلقائي للساعة غير المكتملة.\n\nالتعامل مع الثواني، والتوقف المؤقت، والحد الأدنى، وتقريب مبلغ العملة ما زال مفتوحًا في [سجل القرارات](DECISIONS.md). تلك الأسئلة تمنع إقفال الحساب الإنتاجي فقط، وليس العمل المستقل.\n\n---\n\n",
+    "reason": "Replace open/alternative rounding policy with latest explicit user instruction; preserve remaining questions."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 25. Hourly Pricing",
+    "before": "# 25. Hourly Pricing\n\nHourly pricing uses:\n\n```text\nStart\n+\nPause intervals\n+\nResume\n+\nEnd\n```\n\nThe final charge depends on approved billing rules.\n\nPotential policies include:\n\n```text\nPer minute\nPer 30 minutes\nPer hour\nRounded hour\nMinimum duration\n```\n\nThe exact rounding policy must be explicitly defined as a business rule.\n\n---\n\n",
+    "after": "# 25. Hourly Pricing\n\nالمرجع الوحيد للحساب هو [BR-TIME-001 وBR-TIME-002](SHARED_RULES.md).\n\nOpen: يبدأ بلا نهاية محددة، وينتهي بطلب العميل. للوقت بالساعات نحسب المدة الفعلية أولًا، ثم نقرب **للأعلى فقط** إذا كان المتبقي إلى ربع الساعة التالي ثلاث دقائق أو أقل؛ خلاف ذلك نستخدم المدة الفعلية. المدة الموجودة بالفعل على علامة ربع ساعة تبقى كما هي.\n\nأمثلة بصيغة ساعات:دقائق: `2:27 → 2:30`، `2:20 → 2:20`، `2:42 → 2:45`، `2:57 → 3:00`. لا تقريب لأسفل ولا إهمال تلقائي للساعة غير المكتملة.\n\nالتعامل مع الثواني، والتوقف المؤقت، والحد الأدنى، وتقريب مبلغ العملة ما زال مفتوحًا في [سجل القرارات](DECISIONS.md). تلك الأسئلة تمنع إقفال الحساب الإنتاجي فقط، وليس العمل المستقل.\n\n---\n\n",
+    "reason": "Replace open/alternative rounding policy with latest explicit user instruction; preserve remaining questions."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 25. Match-Based Pricing",
+    "before": "# 25. Match-Based Pricing\n\nA Match-based session is a fixed-price activity.\n\nThe shop defines:\n\n```text\nMatch Duration\n+\nMatch Price\n```\n\nExample:\n\n```text\nBranch A\nMatch Duration = 10 minutes\n\nBranch B\nMatch Duration = 12 minutes\n```\n\nThe customer plays one match.\n\nThe price is fixed for that match.\n\nThe exact business handling for multiple consecutive matches can be refined later.\n\n---\n\n",
+    "after": "# 25. Match-Based Pricing\n\nMatch تسعير مستقل عن Hourly. المستندات السابقة تقترح سعرًا ثابتًا ومدة يضبطها الفرع. وصف المستخدم يثبت أن الموظف قد يستخدم مؤقتًا تقريبيًا مثل 10 دقائق أو ينهي العملاء المباراة بأنفسهم؛ لا يثبت أن انتهاء المؤقت يجب أن ينهي الجلسة آليًا.\n\nنحتفظ بقدرة التسعير بالماتش في Release 1. تحديد النهاية، وعدّ الماتشات المتتالية، والتمديد، والفاتورة المجمعة ينتظر O-04 في [سجل القرارات](DECISIONS.md). أرقام 10 و12 أمثلة إعدادات وليست مدة إلزامية أو تعريفًا نهائيًا للمباراة.\n\n---\n\n",
+    "reason": "Distinguish proposed fixed duration from observed timer use and unresolved completion semantics."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 27. Match Pricing",
+    "before": "# 27. Match Pricing\n\nMatch pricing means:\n\n```text\nOne Match\n=\nFixed Duration\n+\nFixed Price\n```\n\nExample:\n\n```text\nBranch A\nMatch Duration = 10 minutes\n\nBranch B\nMatch Duration = 12 minutes\n```\n\nEach branch can configure the match duration.\n\nA match has a fixed price.\n\nThe system must not treat match pricing as a normal hourly rate.\n\n---\n\n",
+    "after": "# 27. Match Pricing\n\nMatch تسعير مستقل عن Hourly. المستندات السابقة تقترح سعرًا ثابتًا ومدة يضبطها الفرع. وصف المستخدم يثبت أن الموظف قد يستخدم مؤقتًا تقريبيًا مثل 10 دقائق أو ينهي العملاء المباراة بأنفسهم؛ لا يثبت أن انتهاء المؤقت يجب أن ينهي الجلسة آليًا.\n\nنحتفظ بقدرة التسعير بالماتش في Release 1. تحديد النهاية، وعدّ الماتشات المتتالية، والتمديد، والفاتورة المجمعة ينتظر O-04 في [سجل القرارات](DECISIONS.md). أرقام 10 و12 أمثلة إعدادات وليست مدة إلزامية أو تعريفًا نهائيًا للمباراة.\n\n---\n\n",
+    "reason": "Distinguish proposed fixed duration from observed timer use and unresolved completion semantics."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 28. Match Business Rule",
+    "before": "# 28. Match Business Rule\n\nThe customer plays one match.\n\nThe branch determines the match duration.\n\nExamples:\n\n```text\n10 minutes\n12 minutes\n```\n\nThe exact handling of consecutive matches, extensions, and combined transactions must be finalized before detailed implementation.\n\n---\n\n",
+    "after": "# 28. Match Business Rule\n\nMatch تسعير مستقل عن Hourly. المستندات السابقة تقترح سعرًا ثابتًا ومدة يضبطها الفرع. وصف المستخدم يثبت أن الموظف قد يستخدم مؤقتًا تقريبيًا مثل 10 دقائق أو ينهي العملاء المباراة بأنفسهم؛ لا يثبت أن انتهاء المؤقت يجب أن ينهي الجلسة آليًا.\n\nنحتفظ بقدرة التسعير بالماتش في Release 1. تحديد النهاية، وعدّ الماتشات المتتالية، والتمديد، والفاتورة المجمعة ينتظر O-04 في [سجل القرارات](DECISIONS.md). أرقام 10 و12 أمثلة إعدادات وليست مدة إلزامية أو تعريفًا نهائيًا للمباراة.\n\n---\n\n",
+    "reason": "Distinguish proposed fixed duration from observed timer use and unresolved completion semantics."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 26. Match Pricing",
+    "before": "# 26. Match Pricing\n\nMatch pricing:\n\n```text\nOne Match\n=\nFixed Duration\n+\nFixed Price\n```\n\nExamples:\n\n```text\nBranch A:\n10 minutes\n\nBranch B:\n12 minutes\n```\n\nThe duration is branch-configurable.\n\nThe price is fixed for the configured match.\n\n---\n\n",
+    "after": "# 26. Match Pricing\n\nMatch تسعير مستقل عن Hourly. المستندات السابقة تقترح سعرًا ثابتًا ومدة يضبطها الفرع. وصف المستخدم يثبت أن الموظف قد يستخدم مؤقتًا تقريبيًا مثل 10 دقائق أو ينهي العملاء المباراة بأنفسهم؛ لا يثبت أن انتهاء المؤقت يجب أن ينهي الجلسة آليًا.\n\nنحتفظ بقدرة التسعير بالماتش في Release 1. تحديد النهاية، وعدّ الماتشات المتتالية، والتمديد، والفاتورة المجمعة ينتظر O-04 في [سجل القرارات](DECISIONS.md). أرقام 10 و12 أمثلة إعدادات وليست مدة إلزامية أو تعريفًا نهائيًا للمباراة.\n\n---\n\n",
+    "reason": "Distinguish proposed fixed duration from observed timer use and unresolved completion semantics."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 11. Match Pricing",
+    "before": "# 11. Match Pricing\n\nMatch pricing means:\n\n```text\nOne Match\n=\nFixed Duration\n+\nFixed Price\n```\n\nThe duration can vary by branch.\n\nExamples:\n\n```text\nBranch A:\n10 minutes\n\nBranch B:\n12 minutes\n```\n\nThe price for the match is fixed according to the branch configuration.\n\n---\n\n",
+    "after": "# 11. Match Pricing\n\nMatch تسعير مستقل عن Hourly. المستندات السابقة تقترح سعرًا ثابتًا ومدة يضبطها الفرع. وصف المستخدم يثبت أن الموظف قد يستخدم مؤقتًا تقريبيًا مثل 10 دقائق أو ينهي العملاء المباراة بأنفسهم؛ لا يثبت أن انتهاء المؤقت يجب أن ينهي الجلسة آليًا.\n\nنحتفظ بقدرة التسعير بالماتش في Release 1. تحديد النهاية، وعدّ الماتشات المتتالية، والتمديد، والفاتورة المجمعة ينتظر O-04 في [سجل القرارات](DECISIONS.md). أرقام 10 و12 أمثلة إعدادات وليست مدة إلزامية أو تعريفًا نهائيًا للمباراة.\n\n---\n\n",
+    "reason": "Distinguish proposed fixed duration from observed timer use and unresolved completion semantics."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 166. Recommended First Development Order",
+    "before": "# 166. Recommended First Development Order\n\nAfter Discovery and initial requirements:\n\n```text\n1. Solution structure\n2. Backend foundation\n3. Authentication / authorization foundation\n4. Branch / user / role model\n5. Console model\n6. Pricing model\n7. Session model\n8. Local SQLite foundation\n9. Sync foundation\n10. WPF shell/navigation\n11. Session workflow\n12. Invoice/payment\n13. Manager overrides\n14. Expenses\n15. Reports\n16. Asset quantities\n17. Hardening\n18. Testing\n19. UAT\n20. Pilot\n```\n\nThis is a direction, not a final ticket list.\n\n---\n\n",
+    "after": "# 166. Recommended First Development Order\n\nالمرجع التنفيذي هو [خريطة التنفيذ](ROADMAP.md) و[تغطية Release 1](R1_ACCEPTANCE.md).\n\nM0 تثبيت قواعد الجزء الأول ومراجعة الموجود → M1 جلسة وفاتورة ودفع محلي مع أساس الهوية → M2 استعادة ومزامنة مبكرة → M3 استكمال جميع وظائف Release 1 → M4 اختبار المستخدم وتجربة الفرع والإطلاق.\n\nتُنفّذ الاختبارات والصلاحيات وسجل العمليات مع كل جزء. M1 وM2 معالم داخلية وليسا تقليصًا للإصدار. لا يؤجل الحفظ المحلي أو المزامنة إلى ما بعد جميع الشاشات، ولا تكون كل وثائق المشروع شرطًا مسبقًا للبرمجة.\n\n---\n\n",
+    "reason": "Move local operation, sync and verification early without reducing Release 1 scope."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 167. Recommended Release 1 Development Slices",
+    "before": "# 167. Recommended Release 1 Development Slices\n\n## Slice A — Foundation\n\n```text\nSolution\nProjects\nConfiguration\nLogging\nDatabase\nMigrations\n```\n\n## Slice B — Identity\n\n```text\nUser\nRole\nPermission\nPIN\nLock screen\nBranch\n```\n\n## Slice C — Gaming\n\n```text\nConsole\nPricing\nSession\nTimer\nPause\nResume\nComplete\n```\n\n## Slice D — Financial Core\n\n```text\nInvoice\nPayment\nDiscount\nRevenue\n```\n\n## Slice E — Branch Management\n\n```text\nExpenses\nShifts\nAssets\n```\n\n## Slice F — Offline\n\n```text\nSQLite\nLocal cache\nSync queue\nRetry\nConflict foundation\n```\n\n## Slice G — Reports\n\n```text\nDaily\nWeekly\nMonthly\n```\n\n## Slice H — Hardening\n\n```text\nSecurity\nTests\nPerformance\nUAT\nDeployment\n```\n\n---\n\n",
+    "after": "# 167. Recommended Release 1 Development Slices\n\nالمرجع التنفيذي هو [خريطة التنفيذ](ROADMAP.md) و[تغطية Release 1](R1_ACCEPTANCE.md).\n\nM0 تثبيت قواعد الجزء الأول ومراجعة الموجود → M1 جلسة وفاتورة ودفع محلي مع أساس الهوية → M2 استعادة ومزامنة مبكرة → M3 استكمال جميع وظائف Release 1 → M4 اختبار المستخدم وتجربة الفرع والإطلاق.\n\nتُنفّذ الاختبارات والصلاحيات وسجل العمليات مع كل جزء. M1 وM2 معالم داخلية وليسا تقليصًا للإصدار. لا يؤجل الحفظ المحلي أو المزامنة إلى ما بعد جميع الشاشات، ولا تكون كل وثائق المشروع شرطًا مسبقًا للبرمجة.\n\n---\n\n",
+    "reason": "Move local operation, sync and verification early without reducing Release 1 scope."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 178. Recommended Next Work Item",
+    "before": "# 178. Recommended Next Work Item\n\nThe next formal project task should be:\n\n```text\nPHASE 0 — DISCOVERY\n        ↓\nPHASE 1 — BUSINESS ANALYSIS\n        ↓\nCreate final:\n- Problem Statement\n- Stakeholder Map\n- AS-IS Process\n- TO-BE Process\n- Business Goals\n- Scope\n- Business Rules\n- MVP Release Matrix\n```\n\nOnly after those are stable should the project move into the deeper:\n\n```text\nPRD\n→ UX\n→ System Analysis\n→ Architecture\n→ ERD/API\n→ Security\n→ Development\n```\n\nThis sequence protects the project from premature coding and uncontrolled scope growth.\n\n---\n\n",
+    "after": "# 178. Recommended Next Work Item\n\nالمرجع التنفيذي هو [خريطة التنفيذ](ROADMAP.md) و[تغطية Release 1](R1_ACCEPTANCE.md).\n\nM0 تثبيت قواعد الجزء الأول ومراجعة الموجود → M1 جلسة وفاتورة ودفع محلي مع أساس الهوية → M2 استعادة ومزامنة مبكرة → M3 استكمال جميع وظائف Release 1 → M4 اختبار المستخدم وتجربة الفرع والإطلاق.\n\nتُنفّذ الاختبارات والصلاحيات وسجل العمليات مع كل جزء. M1 وM2 معالم داخلية وليسا تقليصًا للإصدار. لا يؤجل الحفظ المحلي أو المزامنة إلى ما بعد جميع الشاشات، ولا تكون كل وثائق المشروع شرطًا مسبقًا للبرمجة.\n\n---\n\n",
+    "reason": "Move local operation, sync and verification early without reducing Release 1 scope."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 157. Release 1 Development Order",
+    "before": "# 157. Release 1 Development Order\n\nRecommended:\n\n```text\n1. Repository / solution foundation\n2. Backend foundation\n3. Central SQL Server foundation\n4. Local SQLite foundation\n5. Authentication\n6. Roles / Permissions\n7. Branch model\n8. User model\n9. WPF shell/navigation\n10. Console management\n11. Pricing\n12. Session management\n13. Invoice\n14. Cash payment\n15. Discounts\n16. Manager overrides\n17. Shifts\n18. Expenses\n19. Asset quantities\n20. Reports\n21. Synchronization\n22. Audit logging\n23. Security hardening\n24. Automated testing\n25. Staging\n26. UAT\n27. Pilot\n28. Production\n```\n\nThis is a recommended implementation order, not a requirement to complete every item in total isolation.\n\n---\n\n",
+    "after": "# 157. Release 1 Development Order\n\nالمرجع التنفيذي هو [خريطة التنفيذ](ROADMAP.md) و[تغطية Release 1](R1_ACCEPTANCE.md).\n\nM0 تثبيت قواعد الجزء الأول ومراجعة الموجود → M1 جلسة وفاتورة ودفع محلي مع أساس الهوية → M2 استعادة ومزامنة مبكرة → M3 استكمال جميع وظائف Release 1 → M4 اختبار المستخدم وتجربة الفرع والإطلاق.\n\nتُنفّذ الاختبارات والصلاحيات وسجل العمليات مع كل جزء. M1 وM2 معالم داخلية وليسا تقليصًا للإصدار. لا يؤجل الحفظ المحلي أو المزامنة إلى ما بعد جميع الشاشات، ولا تكون كل وثائق المشروع شرطًا مسبقًا للبرمجة.\n\n---\n\n",
+    "reason": "Move local operation, sync and verification early without reducing Release 1 scope."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 158. Release 1 Milestones",
+    "before": "# 158. Release 1 Milestones\n\n## Milestone A — Foundation\n\n```text\nRepository\nProject structure\nConfiguration\nLogging\nDatabase foundation\nMigrations\n```\n\n## Milestone B — Identity\n\n```text\nUsers\nRoles\nPermissions\nPIN\nLock screen\nBranch\n```\n\n## Milestone C — Gaming\n\n```text\nConsole\nPricing\nSession\nTimer\nPause\nResume\nComplete\n```\n\n## Milestone D — Financial Core\n\n```text\nInvoice\nCash\nDiscount\nRevenue\n```\n\n## Milestone E — Administration\n\n```text\nShift\nExpenses\nAssets\nReports\n```\n\n## Milestone F — Offline\n\n```text\nSQLite\nLocal operation\nSync queue\nRetry\nIdempotency\n```\n\n## Milestone G — Hardening\n\n```text\nAudit\nSecurity\nTesting\nPerformance\nUAT\nDeployment\n```\n\n---\n\n",
+    "after": "# 158. Release 1 Milestones\n\nالمرجع التنفيذي هو [خريطة التنفيذ](ROADMAP.md) و[تغطية Release 1](R1_ACCEPTANCE.md).\n\nM0 تثبيت قواعد الجزء الأول ومراجعة الموجود → M1 جلسة وفاتورة ودفع محلي مع أساس الهوية → M2 استعادة ومزامنة مبكرة → M3 استكمال جميع وظائف Release 1 → M4 اختبار المستخدم وتجربة الفرع والإطلاق.\n\nتُنفّذ الاختبارات والصلاحيات وسجل العمليات مع كل جزء. M1 وM2 معالم داخلية وليسا تقليصًا للإصدار. لا يؤجل الحفظ المحلي أو المزامنة إلى ما بعد جميع الشاشات، ولا تكون كل وثائق المشروع شرطًا مسبقًا للبرمجة.\n\n---\n\n",
+    "reason": "Move local operation, sync and verification early without reducing Release 1 scope."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 0. Purpose of This Document",
+    "before": "# 0. Purpose of This Document\n\nThis file consolidates the project decisions, ideas, requirements, workflows, architecture direction, diagrams, engineering practices, release strategy, security concepts, testing strategy, deployment strategy, documentation plan, and operational model discussed for the +90 PS project.\n\nThe document is intended to act as a **single working source of truth** for the project.\n\nIt separates:\n\n- Confirmed decisions\n- Recommended engineering decisions\n- Deferred features\n- Open decisions\n- Superseded/obsolete ideas\n- Release boundaries\n- Technical implementation responsibilities\n\nThe project is being built by one developer, so the process must emulate the important outputs of a larger professional software/product team without creating unnecessary documentation overhead.\n\n---\n\n",
+    "after": "# 0. Purpose of This Document\n\nهذا المستند مرجع الرؤية وحدود المنتج والقرارات المشتركة. تفاصيل كل إصدار في [R1](RELEASE_1.md)، [R2](RELEASE_2.md)، [R3](RELEASE_3.md). قواعد الحساب ومسار الحفظ لا تُنسخ كسياسات مستقلة؛ مرجعها [SHARED_RULES](SHARED_RULES.md).\n\nالمصادر القديمة محفوظة بأكملها في original_sources.zip. تعليمات المحادثة المعتمدة لهذه المراجعة مبيّنة في سجل القرارات؛ نصوص المستندات السابقة أدلة ومقترحات وليست تعليمات تنفيذ مستقلة.\n\nاختيار المستخدم: إطلاق أسرع مع الحفاظ على كل مميزات R1. التوثيق يخدم التنفيذ ويُحدّث معه.\n\n---\n\n",
+    "reason": "Define documentation ownership and provenance."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 0. How to Use This File",
+    "before": "# 0. How to Use This File\n\nThis document is the **single working source of truth for Release 1**.\n\nIt consolidates the decisions and ideas established for the first release, including:\n\n- Business definition\n- Scope\n- Roles\n- Permissions\n- Business rules\n- Core workflows\n- Pricing\n- Sessions\n- Invoices\n- Cash\n- Discounts\n- Shifts\n- Expenses\n- Assets / inventory\n- Offline operation\n- Local database\n- Central API\n- Central database\n- Synchronization\n- Security\n- Audit\n- UX/UI requirements\n- Architecture\n- Diagrams\n- Database direction\n- API direction\n- Testing\n- UAT\n- Deployment\n- Pilot\n- Monitoring\n- Backup\n- Documentation\n- Project management\n- Delivery checklists\n- Open decisions\n\nThis file intentionally documents **Release 1 only**.\n\nFeatures intentionally outside Release 1 are treated only as exclusions and are not designed here.\n\n---\n\n",
+    "after": "# 0. How to Use This File\n\nهذا مرجع نطاق Release 1 التشغيلي فقط. جميع المميزات والاستبعادات الأصلية في القسمين 3 و4 محفوظة. [مصفوفة القبول](R1_ACCEPTANCE.md) تربطها بالمعالم والاختبارات، و[خريطة التنفيذ](ROADMAP.md) تحدد ترتيبها.\n\nالقواعد المشتركة في [SHARED_RULES](SHARED_RULES.md)، والأسئلة المفتوحة في [DECISIONS](DECISIONS.md). النماذج والـendpoints الموضحة في الأقسام الأصلية مقترحات تصميم، وليست API منفذة أو عقدًا نهائيًا.\n\n---\n\n",
+    "reason": "Keep release-specific source of truth without duplicating shared policy."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 185. Open Decisions Before Final Implementation",
+    "before": "# 185. Open Decisions Before Final Implementation\n\nThese items must be resolved before the relevant code is locked.\n\n## O-001 — Hourly Billing Rules\n\nDefine:\n\n```text\nRounding\nMinimum charge\nPause billing behavior\nMultiple pause behavior\nExact end-time handling\n```\n\n---\n\n## O-002 — Match Rules\n\nDefine:\n\n```text\nHow one match starts\nHow one match ends\nWhether multiple consecutive matches can be combined\nWhether each match becomes its own transaction or one invoice can contain several\nExact price capture behavior\n```\n\n---\n\n## O-003 — Pricing Snapshot\n\nRecommended:\n\n```text\nCapture applicable price at session start.\n```\n\nNeeds final approval.\n\n---\n\n## O-004 — Discount Rules\n\nDefine:\n\n```text\nPercentage vs fixed amount\nMaximum discount\nAllowed predefined discounts\nManager approval threshold\nCalculation order\n```\n\n---\n\n## O-005 — Shift Rules\n\nDefine:\n\n```text\nWho starts a shift\nWho ends a shift\nWhether active sessions block exit\nExact manager intervention behavior\n```\n\nFull cash reconciliation remains outside Release 1.\n\n---\n\n## O-006 — Asset Categories\n\nDefine exact names under:\n\n```text\nConsoles\nControllers\nAccessories\nEquipment\nAssets\n```\n\n---\n\n## O-007 — Asset Status\n\nIf needed in Release 1, select the minimum useful states.\n\nCandidates:\n\n```text\nAvailable\nIn Use\nMaintenance\nDamaged\nRetired\n```\n\n---\n\n## O-008 — Report Layout\n\nDefine exact contents for:\n\n```text\nRevenue Report\nExpense Report\nProfit Report\nSession Report\nInvoice Report\n```\n\n---\n\n## O-009 — Offline Permissions\n\nDefine exactly which manager-sensitive actions are permitted offline and which require stronger synchronization guarantees.\n\n---\n\n## O-010 — PIN Security Design\n\nDefine:\n\n```text\nHashing/protection mechanism\nLocal key protection\nFailed-attempt behavior\nLockout behavior\nPIN reset process\nManager override protection\n```\n\n---\n\n",
+    "after": "# 185. Open Decisions Before Final Implementation\n\nقاعدة Open واتجاه التقريب وحدّ الثلاث دقائق محسومة في [SHARED_RULES](SHARED_RULES.md). الباقي محدد بمعرّفات O-01 إلى O-16 ومرحلة حسم كل سؤال في [DECISIONS](DECISIONS.md).\n\nلا نعيد فتح اتجاه التقريب. لا نفترض الثواني أو التوقف أو الحد الأدنى. لقطة السعر عند بدء الجلسة قرار هندسي لهذه الخطة موثق ADR-02، وليست ادعاءً بأنه كان طلبًا صريحًا قديمًا.\n\nالأسئلة القديمة O-001..O-010 تقابل الآن: O-01..03، O-04، ADR-02، O-06، O-07، O-08، O-08، O-09، O-10، O-11 على الترتيب. راجع السجل لملكية القرار وبوابته.\n\n---\n\n",
+    "reason": "Replace stale open items with staged decision register and trace old IDs."
+  },
+  {
+    "file": "AS_IS.md",
+    "section": "# 6. Determine Session Duration",
+    "before": "# 6. Determine Session Duration\n\nالموظف يسأل العميل عن المدة.\n\nالحالات الموجودة حاليًا:\n\n```text\nSpecific Duration\n```\n\nأو:\n\n```text\nOpen Time\n```\n\nأي أن العميل قد يحدد مدة معينة أو يطلب اللعب بدون تحديد مدة نهائية مسبقًا.\n\n---\n\n",
+    "after": "# 6. Determine Session Duration\n\nالعميل إما يحدد مدة، أو يطلب Open: اللعب بلا مدة محددة مسبقًا حتى يطلب التوقف. مثال: يبدأ 1:00 وينتهي بطلبه 2:15، فالمدة 1:15.\n\nفي الماتش قد يستخدم الموظف مؤقت الهاتف لمدة تقريبية، أو ينتهي اللعب عندما ينهي العملاء المباراة. تحديد إنهاء آلي في البرنامج قرار TO-BE غير محسوم.\n\n---\n\n",
+    "reason": "Apply actual user clarification on Open; avoid inventing automatic match end."
+  },
+  {
+    "file": "AS_IS.md",
+    "section": "# 8. During the Session",
+    "before": "# 8. During the Session\n\nأثناء اللعب:\n\n```text\nCustomer plays\n```\n\nلا يوجد نظام مركزي يقوم تلقائيًا بإدارة:\n\n```text\nSession Timer\nSession State\nElapsed Time\nCurrent Cost\n```\n\nويظل الموظف معتمدًا على التسجيل اليدوي.\n\n---\n\n",
+    "after": "# 8. During the Session\n\nالموظف يعتمد على تسجيل البداية والملاحظة وساعة الهاتف أو Stopwatch/Timer. العملاء يلعبون، وعند طلب الحساب تُحسب المدة يدويًا. مؤقت الماتش مثال لأداة الموظف الحالية، وليس دليلًا على إلزام النظام بإنهاء الجلسة عند انقضائه.\n\n---\n\n",
+    "reason": "Add described manual timer behavior."
+  },
+  {
+    "file": "AS_IS.md",
+    "section": "# 32. AS-IS Business Rules Discovered",
+    "before": "# 32. AS-IS Business Rules Discovered\n\nCurrent rules visible from the process:\n\n```text\nThe customer must have an available place before starting.\n\nThe number of controllers depends on the number of players.\n\nFor applicable football sessions, Single/Multi affects the operation/pricing.\n\nThe customer may specify a duration.\n\nThe customer may also use open time.\n\nThe employee records the start time.\n\nThe final duration is determined when the customer finishes.\n\nThe customer pays cash.\n\nThe employee calculates the final amount manually.\n```\n\nThese will later become formal business rules for the TO-BE system.\n\n---\n\n",
+    "after": "# 32. AS-IS Business Rules Discovered\n\nالوصف الحالي: مكان متاح، لعبة وعدد لاعبين، Single/Multi عند انطباقه، مدة محددة أو Open، تسجيل البداية، انتهاء بطلب العميل أو انتهاء المباراة، حساب يدوي ثم نقد.\n\nالمستخدم طلب من النظام لاحقًا حسابًا دقيقًا وتقريبًا محدودًا. لم نتحقق أن الموظف يطبق حاليًا سياسة آلية ثابتة لكل الحالات. لذلك تُوثّق السياسة في TO-BE داخل [SHARED_RULES](SHARED_RULES.md)، لا كحقيقة مشاهدة عن التشغيل اليدوي.\n\n---\n\n",
+    "reason": "Separate observed operation from desired software behavior."
+  },
+  {
+    "file": "AS_IS.md",
+    "section": "# 33. Important Questions Still Open",
+    "before": "# 33. Important Questions Still Open\n\nThe AS-IS process exposed several questions that should be answered before finalizing the Release 1 requirements.\n\n## Pricing\n\n```text\nHow exactly is an Hourly session rounded?\n\nIf a customer plays 2h 05m, what do they pay?\n\nIf a customer plays 2h 59m, what do they pay?\n\nIs there a minimum charge?\n\nDoes \"Open Time\" use the same hourly pricing?\n\n```\n\n## Match\n\n```text\nWhen the customer selects Match:\nIs the match automatically exactly 10/12 minutes?\n\nHow does the employee start the match?\n\nHow does the employee know the match ended?\n\nCan the customer play multiple matches?\n```\n\n## Controllers\n\n```text\nAre controllers tracked only as quantity?\n\nDoes the employee need to record how many controllers were given to the customer?\n\nDoes the shop need to track missing/damaged controllers?\n```\n\n## Console\n\n```text\nCan the customer choose a specific console?\n\nOr does the employee assign any suitable available console?\n\nAre VIP/Standard categories attached to consoles?\n```\n\n## Open Time\n\n```text\nDoes open time mean:\n\"Play until the customer says stop\"\n\nor does it have another shop-specific meaning?\n```\n\n## Payment\n\n```text\nDoes the customer receive a formal invoice every time?\n\nDoes the shop currently keep any transaction record besides the notebook?\n\nCan payment ever be partially paid?\n```\n\n---\n\n",
+    "after": "# 33. Important Questions Still Open\n\nتم توضيح معنى Open، وطريقة استخدام مؤقت الهاتف، ومتطلب التقريب في البرنامج. لا تبقى هذه أسئلة عامة مفتوحة.\n\nالتحقق المتبقي من الواقع: طريقة إثبات نهاية المباراة، تسجيل عدة ماتشات، وجود إيصال حالي أو دفعات جزئية، متابعة الكنترولرز التالفة أو الناقصة، وآلية اختيار الجهاز عند عدم التوفر.\n\nأسئلة تصميم البرنامج التي تُحسم قبل الجزء المعني: الثواني والتوقف والحد الأدنى والأسعار والخصومات والورديات والصلاحيات؛ راجع [DECISIONS](DECISIONS.md). لا نخلطها بوصف ممارسة المحل الحالية.\n\n---\n\n",
+    "reason": "Close answered questions while preserving genuine discovery gaps."
+  },
+  {
+    "file": "AS_IS.md",
+    "section": "# 35. Transition to TO-BE",
+    "before": "# 35. Transition to TO-BE\n\nThe next step is to take this exact real-world process and redesign it as:\n\n```text\nTO-BE Process\n```\n\nMeaning:\n\n> How should the same shop work after +90 PS is installed?\n\nThe goal is not to copy every manual step.\n\nThe goal is to remove unnecessary human work while preserving the natural workflow of the cashier and customer.",
+    "after": "# 35. Transition to TO-BE\n\nالخطوة التالية وصف TO-BE لجزء الجلسة والحساب والحفظ المحلي في [FIRST_SLICE](FIRST_SLICE.md)، مع الإجابة عن أسئلة الحساب اللازمة. يمكن مراجعة الكود وأساس الحفظ والهوية أثناء انتظار إجابات قواعد التشغيل. لا يلزم إنهاء جميع وثائق الإصدارات اللاحقة.\n\n---\n\n",
+    "reason": "Replace linear documentation gate with just-in-time first slice."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 44. Current Discovery Status",
+    "before": "# 44. Current Discovery Status\n\n```text\nBusiness Context           → Mostly Defined\nUsers                      → Defined\nCore Scope                 → Defined\nRelease 1 Boundary         → Defined\nTechnology Direction       → Defined\nOffline Requirement        → Defined\nSecurity Direction        → Defined\n\nAS-IS Workflow             → Needs Validation\nExact Billing Rules        → Needs Finalization\nExact Discount Rules       → Needs Finalization\nExact Shift Rules          → Needs Finalization\nExact Report Layouts       → Needs Finalization\nExact Offline Permission   → Needs Finalization\n```\n\n---\n\n",
+    "after": "# 44. Current Discovery Status\n\nالنطاق والتقنيات واتجاه Open والتقريب موثقة. ما زالت تفاصيل الحساب والماتش والخصومات والورديات بحاجة إلى قرارات عند بواباتها؛ [DECISIONS](DECISIONS.md).\n\nهذا تحديث تخطيط ووثائق؛ لا يعني أن البرنامج نُفّذ أو أن اختبارات التشغيل اجتازت. الحالة الفعلية للكود في [CODE_REVIEW](CODE_REVIEW.md).\n\n---\n\n",
+    "reason": "State accurate planning vs implementation status."
+  },
+  {
+    "file": "DISCOVERY_BRIEF.md",
+    "section": "# 45. Approval State",
+    "before": "# 45. Approval State\n\nThis document is a:\n\n```text\nWORKING DRAFT\n```\n\nIt should become:\n\n```text\nApproved Discovery Baseline\n```\n\nafter the remaining business details are validated.\n\n---\n\n",
+    "after": "# 45. Approval State\n\nالمستخدم اعتمد تنفيذ تحديث الخطة، وأكد الحفاظ على نطاق Release 1 وأولوية الإطلاق. هذا اعتماد لاتجاه المراجعة، وليس اعتمادًا تلقائيًا لكل مقترحات النماذج والأسعار في الوثائق السابقة. القرارات الجديدة مفصولة بين متطلبات مؤكدة وقرارات هندسية وأسئلة مفتوحة.\n\n---\n\n",
+    "reason": "Avoid equating legacy assistant suggestions with user approval."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 176. Final Current Source of Truth",
+    "before": "# 176. Final Current Source of Truth\n\nAs of this document version, the strongest confirmed decisions are:\n\n```text\n1. Phase 1 has NO Website.\n2. WPF is the primary operational client.\n3. ASP.NET Core API is the central backend.\n4. SQL Server is the central database.\n5. SQLite is the local branch database.\n6. Offline operation is a core requirement.\n7. Synchronization is a core architectural concern.\n8. There are currently zero branches.\n9. The target is 40+ branches.\n10. One owner may have multiple branches.\n11. Managers operate within authorized branches.\n12. Cashiers use PINs on one shared branch computer.\n13. Manager/Cashier permissions are required.\n14. Backend authorization is mandatory.\n15. No food/drink/cafeteria sales.\n16. No product sales.\n17. Inventory means internal assets/equipment/quantities.\n18. PS4 and PS5 can have different prices.\n19. Single and Multi have separate prices.\n20. Pricing supports Hourly and Match.\n21. Match duration is branch configurable, e.g. 10 or 12 minutes.\n22. Match price is fixed for the match.\n23. Bookings are part of the broader MVP roadmap.\n24. Booking can use VIP/Standard where the branch offers those categories.\n25. Booking requires a deposit.\n26. At 10 minutes late, current rule is a 10% charge.\n27. At 15 minutes late, current rule is cancellation and payment forfeiture.\n28. Customer phone is the primary lookup/key.\n29. Customer name is required.\n30. Customer Account/History/Booking features are planned for Expanded MVP.\n31. Refund workflow is not a current core requirement.\n32. Expenses are manager-only.\n33. Discounts can be predefined for cashier use.\n34. Manual/arbitrary discount should require manager authorization.\n35. Cash is the initial payment method.\n36. Revenue comes primarily from gaming sessions/bookings.\n37. Profit = revenue minus expenses at the initial business-reporting level.\n38. Full cash reconciliation is deferred.\n39. Invoice deletion should be replaced by controlled cancellation/void.\n40. Sensitive actions should be audited.\n41. The first customer deliverable is an Operational MVP.\n42. The project will evolve through three major releases.\n43. The customer can report bugs while the next release is being developed.\n44. Future website/mobile clients should reuse the same API.\n45. A four-package commercial model is planned conceptually but not yet finalized.\n46. Multi-branch features should be entitlement/plan-aware.\n47. The product should scale from one branch to 40+ branches without redesigning the entire platform.\n```\n\n---\n\n",
+    "after": "# 176. Final Current Source of Truth\n\nالمرجع المشترك الحالي هو [SHARED_RULES](SHARED_RULES.md). النطاق التفصيلي لكل إصدار في ملفه. الرؤية: محل واحد ثم عدة فروع، مع ملكية وعزل فروع وأدوار Cashier/Manager/Owner.\n\nالمستندات السابقة تصف صفر فروع فعلية وهدفًا مستقبليًا 40+؛ هذه حالة موروثة من وقت التوثيق وليست تحققًا جديدًا من الوضع التجاري.\n\nسياسات العملاء والحجوزات والعربون والتأخير تقع في Release 2؛ الباقات والتحويلات والتوسع المتقدم في Release 3. لا تدخل تلقائيًا في R1، ولا تصبح اقتراحات قديمة قرارات معتمدة لمجرد ورودها تحت عنوان Confirmed.\n\n---\n\n",
+    "reason": "Centralize authority, preserve roadmap boundaries and distinguish inherited facts."
+  },
+  {
+    "file": "RELEASE_1.md",
+    "section": "# 184. Final Release 1 Source of Truth",
+    "before": "# 184. Final Release 1 Source of Truth\n\nThe following statements are confirmed baseline decisions for this release:\n\n```text\n1. WPF Desktop is the main client.\n2. ASP.NET Core Web API is the central backend.\n3. SQL Server is the central database.\n4. SQLite is the local branch database.\n5. Offline operation is mandatory.\n6. Synchronization is part of the core architecture.\n7. Website is not part of Release 1.\n8. Mobile application is not part of Release 1.\n9. No food sales.\n10. No drinks sales.\n11. No cafeteria.\n12. No general product sales.\n13. No printer integration.\n14. No barcode scanner.\n15. No POS hardware.\n16. No membership system.\n17. Current real branches = 0.\n18. Architecture is intended to support 40+ branches.\n19. An owner can conceptually own multiple branches.\n20. Manager is branch-scoped.\n21. Cashier is branch-scoped.\n22. One branch uses one physical PC.\n23. Multiple cashiers can use that PC.\n24. Each cashier has a personal PIN.\n25. Local authentication is required.\n26. Manager and Cashier are the main operational roles.\n27. Owner represents ownership/business scope.\n28. Backend authorization is mandatory.\n29. Branch isolation is mandatory.\n30. Console count varies by branch.\n31. PS4 and PS5 can have different prices.\n32. Single and Multi have different prices.\n33. Pricing is branch-specific.\n34. Hourly pricing is supported.\n35. Match pricing is supported.\n36. Match pricing is fixed-price per match.\n37. Match duration is branch-configurable, e.g. 10 or 12 minutes.\n38. Session supports start.\n39. Session supports pause.\n40. Session supports resume.\n41. Session supports complete.\n42. Session opener is recorded.\n43. Session transfer uses manager authorization.\n44. Cash is the initial payment method.\n45. Invoice is a persistent financial record.\n46. Cashier cannot freely delete invoices.\n47. Manager authorization is required for protected cancellation.\n48. Cancel/void is preferred over destructive invoice deletion.\n49. Predefined discounts can be used by cashiers.\n50. Manual discounts require manager authorization.\n51. Expenses are manager-only.\n52. Revenue comes from gaming operation.\n53. Profit is initially Revenue - Expenses.\n54. Inventory is internal assets/equipment.\n55. Inventory is quantity-based where appropriate.\n56. Shifts exist in basic form.\n57. Full cash reconciliation is outside Release 1.\n58. Sensitive operations should be audited.\n59. WPF does not directly connect to central SQL Server.\n60. Local operations persist to SQLite.\n61. Synchronization must be retry-safe.\n62. Synchronization must be idempotent.\n63. Sync conflicts must not be silently overwritten.\n64. Security is integrated throughout development.\n65. Testing is part of Release 1.\n66. UAT is part of Release 1.\n67. Pilot deployment is part of Release 1.\n68. Documentation is part of the release deliverable.\n```\n\n---\n\n",
+    "after": "# 184. Final Release 1 Source of Truth\n\nنطاق Release 1 محفوظ كاملًا في القسمين 3 و4، ويغطّيه [R1_ACCEPTANCE](R1_ACCEPTANCE.md). المرجع المشترك [SHARED_RULES](SHARED_RULES.md)، والتنفيذ [ROADMAP](ROADMAP.md).\n\nكل فقرة تصف نموذج بيانات أو endpoint مرشحًا تظل تصميمًا أوليًا حتى إن ظهرت في قوائم قديمة باسم Final. لا يغيّر ذلك المتطلبات التشغيلية المتفق عليها أو حدود الإصدار.\n\n---\n\n",
+    "reason": "Remove duplicated baseline and qualify candidate models."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 30. Refunds",
+    "before": "# 30. Refunds\n\nThe current scope does not require a normal customer refund workflow.\n\nThe booking business rule currently states that after the defined no-show threshold, the payment is forfeited.\n\nAny exceptional refund policy can be added later if needed.\n\n---\n\n",
+    "after": "# 30. Refunds\n\nالاسترجاع والحجز والعربون يتبعان [Release 2](RELEASE_2.md)، وليسا وظائف R1 جديدة. الاسترجاع العادي مستبعد في النطاق السابق؛ الحالات الاستثنائية والمعالجة المالية ومصادرة العربون تظل مرتبطة بقرار الحجز O-14.\n\n---\n\n",
+    "reason": "Centralize Release 2 policy rather than duplicate it."
+  },
+  {
+    "file": "MASTER.md",
+    "section": "# 168. Release 2 Development Slices",
+    "before": "# 168. Release 2 Development Slices\n\n```text\nCustomer\n    ↓\nCustomer Account\n    ↓\nCustomer History\n    ↓\nBooking\n    ↓\nBooking Policies\n    ↓\nDeposits\n    ↓\nLate rules\n    ↓\nBooking history\n    ↓\nAdvanced reports\n    ↓\nRegression testing\n```\n\n---\n\n",
+    "after": "# 168. Release 2 Development Slices\n\nانظر [Release 2](RELEASE_2.md): العملاء ثم التاريخ ثم الحجز والعربون وتسجيل الوصول. تُفحص المزامنة والصلاحيات والاختبارات مع كل إضافة. التقارير في R2 تخص العملاء والحجوزات؛ التحليلات المتقدمة الشاملة تظل R3.\n\n---\n\n",
+    "reason": "Clarify customer reporting vs advanced analytics boundary."
+  },
+  {
+    "file": "RELEASE_2.md",
+    "section": "# 159. Release 2 Milestones",
+    "before": "# 159. Release 2 Milestones\n\n## Milestone A — Customer Foundation\n\n```text\nCustomer entity\nCustomer repository/services\nSearch\nCreate\nUpdate\nAuthorization\nOffline customer data\n```\n\n## Milestone B — Customer History\n\n```text\nSession history\nBooking history\nInvoice/transaction context\nHistory queries\nPagination\n```\n\n## Milestone C — Booking Foundation\n\n```text\nBooking entity\nAvailability\nPricing snapshot\nDeposit\nStatus machine\n```\n\n## Milestone D — Booking Operations\n\n```text\nConfirmation\nCheck-in\nLate rules\nNo-show\nCancellation\nBooking-to-session\n```\n\n## Milestone E — Offline / Sync\n\n```text\nCustomer sync\nBooking policy\nBooking sync\nConflict handling\nRetry\nIdempotency\n```\n\n## Milestone F — Hardening\n\n```text\nSecurity\nRegression\nPerformance\nUAT\nDeployment\nPilot\n```\n\n---\n\n",
+    "after": "# 159. Release 2 Milestones\n\nمعالم Release 2: العملاء والبحث → التاريخ → الحجز والعربون → التأخير/الإلغاء والتحويل لجلسة → اختبار المستخدم والإطلاق.\n\nفي كل معلم تُنفّذ الصلاحيات والاختبارات وسياسة الأوفلاين والمزامنة المتعلقة به. سياسة حجز دون اتصال يجب حسمها قبل بناء الحجز، ولا يكفي توفر بيانات قديمة لضمان حجز مؤكد. يعتمد الإصدار على [R1](RELEASE_1.md) و[ADR-01](SHARED_RULES.md) ولا يعيد تصميمهما.\n\n---\n\n",
+    "reason": "Apply early sync policy to incremental Release 2 without expanding scope."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 36. Booking Deposit",
+    "before": "# 36. Booking Deposit\n\nA booking requires a deposit.\n\nRecord at minimum:\n\n```text\nDeposit Amount\nPayment Status\nPayment Time\nReceived By\nBooking Reference\n```\n\nThe exact percentage/fixed amount may be configurable according to the business policy.\n\n---\n\n",
+    "after": "# 36. Booking Deposit\n\nهذه قدرة موروثة من [Release 2](RELEASE_2.md)، الذي يملك تعريف العربون والتأخير وحدود 10/15 دقيقة والمعالجة المالية. لا يعرّف R3 سياسة بديلة؛ أي تغيير لاحق يُسجّل كتغيير صريح مع اختبارات ترحيل ورجوع. المعالجة النهائية والأسئلة غير المحسومة في O-14 داخل [DECISIONS](DECISIONS.md).\n\n---\n\n",
+    "reason": "Replace repeated Release 2 policy with release-owner reference."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 38. Late Arrival Policy",
+    "before": "# 38. Late Arrival Policy\n\nConfirmed policy:\n\n```text\n10 minutes late\n→ 10% of booking price is charged.\n\n15 minutes late\n→ Booking is cancelled.\n→ Payment/deposit is forfeited.\n```\n\nThe exact boundary conditions must be formally tested.\n\n---\n\n",
+    "after": "# 38. Late Arrival Policy\n\nهذه قدرة موروثة من [Release 2](RELEASE_2.md)، الذي يملك تعريف العربون والتأخير وحدود 10/15 دقيقة والمعالجة المالية. لا يعرّف R3 سياسة بديلة؛ أي تغيير لاحق يُسجّل كتغيير صريح مع اختبارات ترحيل ورجوع. المعالجة النهائية والأسئلة غير المحسومة في O-14 داخل [DECISIONS](DECISIONS.md).\n\n---\n\n",
+    "reason": "Replace repeated Release 2 policy with release-owner reference."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 39. Late Arrival Calculation",
+    "before": "# 39. Late Arrival Calculation\n\nExample:\n\n```text\nBooking = 18:00\nArrival = 18:10\n\nLate threshold reached\n→ Apply 10% rule\n```\n\nExample:\n\n```text\nBooking = 18:00\nArrival = 18:15\n\nCancellation threshold reached\n→ Cancel\n→ Forfeit payment\n```\n\nAt exact boundaries:\n\n```text\n09:59\n10:00\n10:01\n\n14:59\n15:00\n15:01\n```\n\nmust have deterministic documented behavior.\n\n---\n\n",
+    "after": "# 39. Late Arrival Calculation\n\nهذه قدرة موروثة من [Release 2](RELEASE_2.md)، الذي يملك تعريف العربون والتأخير وحدود 10/15 دقيقة والمعالجة المالية. لا يعرّف R3 سياسة بديلة؛ أي تغيير لاحق يُسجّل كتغيير صريح مع اختبارات ترحيل ورجوع. المعالجة النهائية والأسئلة غير المحسومة في O-14 داخل [DECISIONS](DECISIONS.md).\n\n---\n\n",
+    "reason": "Replace repeated Release 2 policy with release-owner reference."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 66. Deposit Financial Integrity",
+    "before": "# 66. Deposit Financial Integrity\n\nA deposit must not be counted twice.\n\nConceptual:\n\n```text\nBooking\n   ↓\nDeposit received\n   ↓\nFinal session invoice\n   ↓\nDeposit applied/recognized\n   ↓\nRemaining cash collected\n```\n\nThe exact accounting treatment for deposits and forfeited deposits must be explicitly defined.\n\n---\n\n",
+    "after": "# 66. Deposit Financial Integrity\n\nهذه قدرة موروثة من [Release 2](RELEASE_2.md)، الذي يملك تعريف العربون والتأخير وحدود 10/15 دقيقة والمعالجة المالية. لا يعرّف R3 سياسة بديلة؛ أي تغيير لاحق يُسجّل كتغيير صريح مع اختبارات ترحيل ورجوع. المعالجة النهائية والأسئلة غير المحسومة في O-14 داخل [DECISIONS](DECISIONS.md).\n\n---\n\n",
+    "reason": "Replace repeated Release 2 policy with release-owner reference."
+  },
+  {
+    "file": "RELEASE_3.md",
+    "section": "# 231. Final End-to-End Product Flow",
+    "before": "# 231. Final End-to-End Product Flow\n\n```text\nOwner\n  ↓\nBusiness\n  ↓\nBranches\n  ↓\nEmployees\n  ↓\nConsoles\n  ↓\nPricing\n  ↓\nCustomer\n  ↓\nBooking or Walk-In\n  ↓\nSession\n  ↓\nInvoice\n  ↓\nCash Payment\n  ↓\nShift\n  ↓\nRevenue\n  ↓\nExpenses\n  ↓\nProfit\n  ↓\nReports\n  ↓\nAnalytics\n  ↓\nOwner Decision\n```\n\nInfrastructure underneath:\n\n```text\nWPF\n  ↓\nSQLite / API\n  ↓\nSync\n  ↓\nASP.NET Core\n  ↓\nSQL Server\n  ↓\nMonitoring / Backup / Recovery\n```\n\n---\n\n",
+    "after": "# 231. Final End-to-End Product Flow\n\nOwner → Branch → Users → Console/Pricing → Walk-in or customer/booking → Session → Invoice/Payment → Shift → Reports → Owner review.\n\nالحجز اختياري في هذا التدفق، وليس شرطًا لجلسة عميل عابر. البنية المشتركة للحفظ تتبع [ADR-01](SHARED_RULES.md)، والتحويلات والباقات والتقارير المتقدمة إضافات R3. لا يمثل المخطط وعدًا بأن Web/Mobile نُفّذا.\n\n---\n\n",
+    "reason": "Align final flow with local-first and optional customer context."
+  }
+]

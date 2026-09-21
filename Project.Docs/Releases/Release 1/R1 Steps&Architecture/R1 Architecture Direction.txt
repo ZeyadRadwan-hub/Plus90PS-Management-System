@@ -1,0 +1,62 @@
+                         +90 PS — Release 1
+                                │
+                                ▼
+                      WPF Desktop Application
+                                │
+                                ▼
+                 Application / Business Layer
+                                │
+       ┌────────────────────────┼────────────────────────┐
+       │                        │                        │
+       ▼                        ▼                        ▼
+ Authentication           Session Logic             Billing
+ Permissions              Pricing Rules             Invoice
+ PIN Security             Pause/Resume              Payment
+ Subscription             Fixed/Match               Reports
+       │                        │                        │
+       └────────────────────────┼────────────────────────┘
+                                │
+                                ▼
+                         Local SQLite DB
+                                │
+                    WAL Mode + synchronous FULL
+                                │
+          ┌─────────────────────┼─────────────────────┐
+          │                     │                     │
+          ▼                     ▼                     ▼
+      Business Data          Audit Data            Outbox
+      Sessions              Security Events       Pending Sync
+      Invoices              User Actions          Operation IDs
+      Payments
+      Pricing Snapshot
+                                │
+                                ▼
+                        LOCAL COMMIT FIRST
+                                │
+                ┌───────────────┴───────────────┐
+                │                               │
+           No Internet                     Internet
+                │                               │
+                ▼                               ▼
+       Continue Approved                Background Sync
+       Offline Operation                      │
+                                               ▼
+                                     ASP.NET Core Web API
+                                               │
+                        ┌──────────────────────┼──────────────────────┐
+                        │                      │                      │
+                        ▼                      ▼                      ▼
+                 Authentication           Authorization          Validation
+                 Branch Identity          Permissions            Idempotency
+                 Subscription             Branch Isolation      Conflict Check
+                        │                      │                      │
+                        └──────────────────────┼──────────────────────┘
+                                               │
+                                               ▼
+                                          SQL Server
+                                               │
+                                               ▼
+                                      Sync Acknowledgement
+                                               │
+                                               ▼
+                                      Local Record = Synced

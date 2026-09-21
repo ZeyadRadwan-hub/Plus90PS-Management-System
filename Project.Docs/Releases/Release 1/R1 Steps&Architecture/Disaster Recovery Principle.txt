@@ -1,0 +1,19 @@
+Never trust RAM as permanent state.
+
+Every important business action
+must become persistent before
+the UI reports success.
+
+Local operation must not depend
+on Internet availability.
+
+Central failure must not stop
+core branch operation.
+
+Retry must not duplicate money.
+
+A power failure must not reset
+an existing session.
+
+Security and subscription locks
+must never delete business data.
