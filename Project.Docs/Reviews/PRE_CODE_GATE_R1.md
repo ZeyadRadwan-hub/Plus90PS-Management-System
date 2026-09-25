@@ -1,6 +1,6 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD for other business implementation.** BE-00 Backend Foundation, BE-01 Billable Time Domain Rules, BE-01.5 API setup, BE-01.6 solution cleanup, BE-02 Session Timing & Pause Lifecycle, BE-03 Session Types & Pricing Context Domain, and BE-04 Money Rounding Domain Rules are the approved implementation slices. This is a completed **checklist template and draft design package**, not completion of every design decision. BE-02 covers timing; BE-03 covers immutable terms and captured pricing; BE-04 rounds an already supplied amount only. No persistence, full Session model, hourly charge formula, pricing management, invoice/payment workflow, authentication, sync, or frontend work is unlocked.
+**CURRENT STATE: HOLD for other business implementation.** BE-00 Backend Foundation, BE-01 Billable Time Domain Rules, BE-01.5 API setup, BE-01.6 solution cleanup, BE-02 Session Timing & Pause Lifecycle, BE-03 Session Types & Pricing Context Domain, and BE-04 Money Rounding Domain Rules are the approved implementation slices. REPO-01 documentation reconciliation is implemented without production-code changes. This is a **checklist and draft design package**, not completion of every design decision. No persistence, full Session model, hourly charge formula, pricing management, invoice/payment workflow, authentication, sync, or frontend work is unlocked.
 
 | Scope | Authorization |
 |---|---|
@@ -9,6 +9,7 @@
 | BE-02 Session Timing & Pause Lifecycle | APPROVED / IMPLEMENTED — unit tested; timing only |
 | BE-03 Session Types & Pricing Context Domain | APPROVED / IMPLEMENTED — unit tested; terms and pricing snapshot only |
 | BE-04 Money Rounding Domain Rules | APPROVED / IMPLEMENTED — unit tested; supplied amount only |
+| REPO-01 Repository & Documentation Reconciliation | IMPLEMENTED — documentation/repository status only; no business code |
 | Database implementation | NOT AUTHORIZED YET |
 | EF Core persistence | NOT AUTHORIZED YET |
 | Authentication | NOT AUTHORIZED YET |
@@ -19,13 +20,12 @@
 | Offline Sync | NOT AUTHORIZED YET |
 | WPF Frontend | NOT AUTHORIZED TO CODEX |
 
-## What exists as draft outputs of this package
+## Historical design-pack outputs (not all tracked here)
 
-- Database storage mapping, field-by-field current ERD inventory and Code First principles; proposed physical mapping, not final schema.
-- System analysis and architecture/transaction boundaries.
-- Candidate API contract **skeleton** (NOT approved OpenAPI), security/threat model and sync failure matrix.
+- The older pack manifest names Database/Data Dictionary, Architecture/System Analysis, API contract, Security, Offline Sync, Testing, Deployment, and UI Override drafts. Those eleven named files are **not tracked in this worktree**; do not infer their contents from the manifest.
+- Available requirements and planning documents discuss local-first architecture, Code First direction, and candidate data/API/security/sync design, but none constitutes an approved physical schema or deployed contract.
 - QA/UAT plan and deployment/backup/DR targets (NOT test results or live backups).
-- Approved intended WPF corrections (old screenshots NOT modified) and targeted diagram reconciliation plan (editable draw.io NOT modified).
+- Approved intended WPF corrections (old screenshots NOT modified) and targeted diagram reconciliation plan. This worktree tracks rendered PNG diagrams only; editable `.drawio`/PlantUML sources are not present here.
 - Document reconciliation plan, decision requests, Codex handoff files.
 
 ## Formal gate checklist
@@ -39,8 +39,8 @@
 | PIN/device/lease/recovery and branch ownership security reviewed | BLOCKED | Threat model and signed authority/revocation policy approved |
 | Offline-sync event/receipt/ordering/conflict resolution design reviewed | DRAFT | Stable keys, failure matrix, safe correction path, local/central transactions specified |
 | UI implementation contract accepted as target, screenshots labeled old | DOC DONE / IMPLEMENTATION NOT STARTED | UI reviewer consent; later WPF EN/AR and RBAC tests |
-| Diagrams consistent with approved design and readable | PARTIAL | Editable sources fixed only where affected, exports reviewed |
-| Duplicate/legacy documents reconciled in actual repo | NOT DONE | canonical index + diffs + archived old versions + links checked |
+| Diagrams consistent with approved design and readable | PARTIAL | Editable sources are not tracked in this worktree; obtain/inspect real sources before claiming source/export reconciliation |
+| Duplicate/legacy documents reconciled in actual repo | REPO-01 PARTIAL | Current-vs-historical status and identified contradictions reconciled; missing design-pack files and old historical links still require source recovery/review |
 | Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
 | Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-04 narrow slices approved as listed above | Direct narrow task authorizations; all other slices remain on HOLD |
 

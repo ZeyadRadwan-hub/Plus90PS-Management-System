@@ -1,5 +1,7 @@
 # تحديث الخطة — 2026-09-06
 
+> **HISTORICAL R1 MASTER / SUPERSEDED WHERE CONFLICTING.** This planning snapshot preserves earlier proposals, not the current implementation contract. Every R1 predefined/manual/manager-authorized discount reference below is superseded; discounts are outside Release 1. Invoice may be issued before Cash Payment. One Match Session is exactly one match; another match needs a new Session; Match ends by employee action, not a timer. Fixed expiry alerts but never auto-stops. Use [CURRENT_STATE.md](../../Reviews/CURRENT_STATE.md), [PRE_CODE_GATE_R1.md](../../Reviews/PRE_CODE_GATE_R1.md), and [BUSINESS_RULES_R1(1).md](../../Requirements/BUSINESS_RULES_R1(1).md) for current status/rules. Paid-invoice cash reversal and exact Pause eligibility remain open.
+
 نسخة مراجعة مستقلة؛ الأصول لم تُعدّل. [ابدأ هنا](README(1).md) · [القواعد المشتركة](BUSINESS_RULES(1).md) · [القرارات المفتوحة](DECISIONS.md) · [التغييرات](CHANGELOG.md).
 
 حالة الدليل: المتطلبات الجديدة المؤكدة من المستخدم مذكورة بمصدرها في SHARED_RULES. بقية المحتوى الموروث يحتفظ بحالته السابقة، وليس اعتمادًا جديدًا. مخططات البنية العامة تمثل اتصال المكونات؛ ترتيب كتابة عمليات الفرع تحدده ADR-01 والمخططات المحدّثة، ولا يُستنتج من سهم عام WPF/API.
@@ -1040,6 +1042,8 @@ No payment gateway is required.
 ---
 
 # 37. Discounts
+
+> **SUPERSEDED FOR R1:** The following discount flow is historical proposal text. It is not an approved R1 feature or implementation instruction.
 
 Release 1 uses two levels.
 
@@ -4303,6 +4307,8 @@ Expenses are included in profit calculations.
 ---
 
 # 173. Business Rules — Discounts
+
+> **SUPERSEDED FOR R1:** The discount rules below are preserved only for historical traceability. No R1 discount feature, permission, API, or test is authorized.
 
 ```text
 BR-DISCOUNT-001

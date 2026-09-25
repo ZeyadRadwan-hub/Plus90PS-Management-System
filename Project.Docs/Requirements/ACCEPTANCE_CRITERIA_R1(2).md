@@ -522,6 +522,13 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 **When** time passes  
 **Then** the system does not automatically end it based on a timer.
 
+### AC-US-SESSION-004-D — One Match per Session
+
+**Given** a Match Session already represents one match
+**When** players request a second match
+**Then** a new Session is required
+**And** the first Match Session is not extended into a second match.
+
 ---
 
 ## US-SESSION-005 — Pause
@@ -765,6 +772,13 @@ Acceptance table:
 **When** the same synchronization operation is retried  
 **Then** a second invoice is not created.
 
+### AC-US-FINANCE-001-C — Invoice Before Payment
+
+**Given** a valid completed session has a final payable amount
+**When** its invoice is issued before cash is received
+**Then** the invoice can exist without a Payment record
+**And** a later cash payment is a separate business step.
+
 ---
 
 ## US-FINANCE-002 — Cash Payment
@@ -787,9 +801,9 @@ Acceptance table:
 
 ### AC-US-FINANCE-003-A
 
-**Given** completion requires Session completion + Invoice + Payment + Pending Sync persistence  
+**Given** an operation requires Session completion + Invoice + Pending Sync persistence, and Payment only if cash is collected in that operation
 **When** the required local commit fails before completion  
-**Then** the UI does not report successful completed payment  
+**Then** the UI does not report success for that operation
 **And** the product does not intentionally present a half-completed operation as complete.
 
 ---

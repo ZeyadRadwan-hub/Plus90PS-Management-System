@@ -1,5 +1,7 @@
 # تحديث الخطة — 2026-09-06
 
+> **HISTORICAL WORKING MASTER / SUPERSEDED FOR CURRENT R1 SCOPE.** This long-form planning snapshot retains old proposals and is not the implementation contract. Every R1 predefined/manual/manager-authorized discount reference below is superseded: discounts are outside Release 1. Invoice may precede Cash Payment; one Match represents one Session and a second Match needs a new Session; Match ends by employee action, Fixed expiry alerts without auto-stop. Use [CURRENT_STATE.md](Reviews/CURRENT_STATE.md), [PRE_CODE_GATE_R1.md](Reviews/PRE_CODE_GATE_R1.md), and [BUSINESS_RULES_R1(1).md](Requirements/BUSINESS_RULES_R1(1).md) for current status and rules. Paid-invoice cash reversal and exact Pause eligibility remain open.
+
 نسخة مراجعة مستقلة؛ الأصول لم تُعدّل. [ابدأ هنا](README(1).md) · [القواعد المشتركة](BUSINESS_RULES(1).md) · [القرارات المفتوحة](DECISIONS.md) · [التغييرات](CHANGELOG.md).
 
 حالة الدليل: المتطلبات الجديدة المؤكدة من المستخدم مذكورة بمصدرها في SHARED_RULES. بقية المحتوى الموروث يحتفظ بحالته السابقة، وليس اعتمادًا جديدًا. مخططات البنية العامة تمثل اتصال المكونات؛ ترتيب كتابة عمليات الفرع تحدده ADR-01 والمخططات المحدّثة، ولا يُستنتج من سهم عام WPF/API.
@@ -1063,6 +1065,8 @@ Need final business validation before implementation.
 ---
 
 # 31. Discounts
+
+> **SUPERSEDED FOR R1:** The following discount rules are retained as historical proposal text only. No discount workflow, permission, endpoint, or test is authorized for Release 1.
 
 Confirmed logic:
 
@@ -4817,6 +4821,8 @@ These are much more important than visual polish alone.
 ---
 
 # 165. MVP Success Criteria
+
+> **Current R1 override:** Any discount line in the historical checklist below is retired; it is not an R1 success criterion.
 
 A successful Release 1 is not:
 

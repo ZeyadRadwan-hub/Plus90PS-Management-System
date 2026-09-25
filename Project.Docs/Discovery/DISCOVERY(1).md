@@ -1,5 +1,7 @@
 # +90 PS — Discovery
 
+> **HISTORICAL DISCOVERY / AS-IS INPUT.** This file preserves earlier shop observations and proposed scope. Discount requirements below are superseded for Release 1; discounts are outside R1. The current decision/status sources are [BUSINESS_RULES_R1(1).md](../Requirements/BUSINESS_RULES_R1(1).md) and [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md). Do not interpret older invoice/payment, Match, or Fixed proposals here as current approval.
+
 > **Merged document**
 >
 > This file combines the following source documents without deleting their original content:

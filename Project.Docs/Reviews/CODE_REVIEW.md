@@ -1,5 +1,7 @@
 # مراجعة المصدر الموجود — قراءة فقط
 
+> **HISTORICAL REVIEW / SUPERSEDED.** This review describes an older `net8.0` API/codebase in a different project snapshot. It does **not** describe the current BE-00 through BE-04 .NET 10 solution or prove that its old findings apply here. Retain the findings below as provenance only; inspect [CURRENT_STATE.md](CURRENT_STATE.md) and the actual `Project.Code/` tree for present implementation. No current build/test claim is made by this historical review.
+
 المصدر: Project Code/Web/+90_Web/+90_Web داخل مجلد المشروع الأصلي. تمت قراءة مشروع ASP.NET Core وProgram وDbContext وModels وControllers. لم نشغّل API أو نتصل بقاعدة البيانات أو نطبّق migrations، ولم نراجع بيانات التشغيل. لا نتائج build أو اختبار تطبيق مدّعاة.
 
 | الموجود فعليًا | التقييم | التصرف في خطة التنفيذ |

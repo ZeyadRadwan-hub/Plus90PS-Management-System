@@ -259,6 +259,9 @@ The system shall not calculate Match price from elapsed time.
 ## FR-MATCH-005
 The system shall not automatically end the Match based on a system timer.
 
+## FR-MATCH-006
+One Match Session shall represent exactly one match. A second match shall require a new Session; the configured Match duration is a reference, not an automatic end or Hourly billing input.
+
 ---
 
 # 12. Pause / Resume
@@ -408,12 +411,15 @@ The cancel/void workflow shall provide an optional reason field. Leaving the rea
 ## FR-INVOICE-010
 If a cancellation/void reason is entered, the system shall preserve it with the relevant history/audit context.
 
+## FR-INVOICE-011
+The system shall allow an invoice to be issued before cash payment. Invoice creation shall not require payment in the same operation.
+
 ---
 
 # 18. Cash Payment
 
 ## FR-PAY-001
-The system shall support cash as the Release 1 payment method.
+The system shall support Cash as the only Release 1 payment method.
 
 ## FR-PAY-002
 The system shall record the cash payment for the relevant invoice/transaction.
@@ -432,7 +438,7 @@ A retried sync of the same accepted payment shall not create another payment.
 The system shall not report successful financial completion when required local records failed to persist.
 
 ## FR-FIN-002
-The local completion workflow shall preserve consistency among required session-completion, invoice, payment, and pending-sync records.
+The local completion workflow shall preserve consistency among the records required for that operation. Session completion, invoice, and pending-sync records must persist before their success is shown; if cash is collected in the same operation, its payment record is required too. An invoice may be issued before a separate later cash payment.
 
 The exact transaction boundary is defined in Database/Offline Design.
 

@@ -452,6 +452,9 @@ The Match is not automatically ended by a system timer in the approved Release 1
 ## BR-MATCH-006 — Match Uses Applicable Match Price
 Billing uses the valid branch/console/mode Match price captured for that match session.
 
+## BR-MATCH-007 — One Match per Session
+One Match Session represents exactly one match. A second match requires a new Session. The branch-configured Match duration is a reference, not an automatic end or a source of elapsed-time pricing.
+
 ---
 
 # 17. Money Rounding Rules
@@ -523,12 +526,15 @@ The UI must not report a successful invoice/payment completion before required l
 ## BR-INVOICE-009 — Cancellation Reason Is Optional
 The protected Cancel/Void flow may include a reason field, but entering a reason is optional. A valid authorized cancellation must be able to proceed without a reason. If a reason is entered, it is preserved with the cancellation/audit context.
 
+## BR-INVOICE-010 — Invoice May Precede Payment
+An invoice may be issued before cash payment. Payment is a separate business step; issuing an invoice does not require immediate cash receipt. The cash effect of cancelling an already-paid invoice remains unresolved.
+
 ---
 
 # 19. Payment Rules
 
 ## BR-PAY-001 — Release 1 Payment Method
-Release 1 records cash payment.
+Cash is the only Release 1 payment method. This does not require cash to be received at the moment an invoice is issued.
 
 ## BR-PAY-002 — Payment Is Linked to Invoice
 A payment is associated with the relevant invoice/financial transaction.
@@ -540,7 +546,7 @@ A recorded cash payment must become persistent.
 Retrying synchronization must not record the same cash payment twice.
 
 ## BR-PAY-005 — Financial Atomicity
-Where Session Completion + Invoice + Payment + Pending Sync are one business completion, the local process should treat the required records as one controlled commit boundary so the system does not show a half-completed financial state.
+Where Session Completion + Invoice + Pending Sync are one business completion, the local process should treat the required records as one controlled commit boundary. If cash is collected in that same operation, include Payment in its required commit boundary. An invoice may also be issued before Payment; neither path may show success before its own required local records persist.
 
 ---
 
@@ -920,7 +926,7 @@ BUSINESS_RULES_R1.md
 
 Keep it as its own artifact.
 
-Current flat layout:
+Historical flat-layout example (not this repository's current paths; see [README.md](../../README.md) for the actual solution and documentation locations):
 
 ```text
 +90PS/
@@ -945,7 +951,9 @@ docs/
 
 ---
 
-# 34. Current Pre-Code Status
+# 34. Historical Pre-Code Status (as written 2026-09-09)
+
+> This section is preserved as a historical planning snapshot. It does not describe the current repository: BE-00 through BE-04 now contain tested backend foundation and Domain code. See [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md) for current implementation status; the wider R1 gate remains HOLD.
 
 ```text
 AS-IS                              ✅

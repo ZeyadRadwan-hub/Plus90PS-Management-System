@@ -687,7 +687,7 @@ The Cancel/Void reason field is optional. Protected authorization, non-destructi
 - Payment is persistent.
 - Sync retry must not duplicate payment.
 - The UI must not show payment success before required persistence succeeds.
-- Release 1 does not require additional payment methods.
+- Cash is the only Release 1 payment method. An invoice may be issued before cash is received; Payment is a separate step.
 
 ---
 

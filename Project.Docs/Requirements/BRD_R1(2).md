@@ -615,6 +615,8 @@ Release 1 records cash payments.
 
 Payment must be associated with the relevant invoice/financial operation.
 
+An invoice may be issued before Payment; cash receipt is a separate business step. Release 1 supports Cash only. The cash refund/reversal effect of cancelling a paid invoice remains unresolved.
+
 ## BRQ-FIN-004
 
 Financial completion must not be shown as successful before required persistence succeeds.
@@ -957,9 +959,9 @@ This is not the ERD. Exact entities, fields, relationships, indexes, keys, and s
 
 # 29. Business Constraints
 
-## BC-001 — Code Starts From Zero
+## BC-001 — Historical Code Baseline
 
-The current project status is planning/documentation only. Release 1 implementation is not treated as already existing.
+At this document's original pre-code date, Release 1 implementation had not started. This is historical status, not the current repository state: BE-00 through BE-04 now contain tested foundation and Domain code. See [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md); the full Release 1 product is not implemented.
 
 ## BC-002 — Desktop-First R1
 

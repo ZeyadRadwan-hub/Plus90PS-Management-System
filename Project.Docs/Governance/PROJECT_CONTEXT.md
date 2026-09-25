@@ -1,6 +1,6 @@
 # +90 PS — Project Context for Codex and reviewers
 
-**Current phase:** Release 1 pre-code design. Never read old `Final` as implemented. Developer/user: Zeyad; collaboration preferences are in root `AboutZeyad.md` (share only facts he explicitly wants in repo, and keep personal details out of public repositories).
+**Document origin:** Release 1 pre-code design snapshot. BE-00 through BE-04 now exist as code; see [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md). Never read old `Final` as implemented. Developer/user: Zeyad; collaboration preferences are in root `AboutZeyad.md` (share only facts he explicitly wants in repo, and keep personal details out of public repositories).
 
 ## Product
 

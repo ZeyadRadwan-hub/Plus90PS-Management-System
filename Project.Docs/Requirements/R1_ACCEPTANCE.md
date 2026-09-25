@@ -1,6 +1,6 @@
 # Release 1 — تتبّع النطاق ومعايير القبول
 
-كل الصفوف مطلوبة ضمن R1؛ M1/M2 تجارب داخلية. حالة التنفيذ لجميعها: غير متحقق في هذه المهمة. هذه معايير مستقبلية وليست نتائج اختبارات تشغيلية.
+الصفوف النشطة فقط مطلوبة ضمن R1؛ R1-15 وR1-16 أدناه محفوظان كمعرّفات متقاعدة للخصومات ولا يُعاد استخدامهما. M1/M2 تجارب داخلية. هذه معايير مستقبلية وليست نتائج اختبارات تشغيلية؛ حالة الكود المنفذ فعلًا في [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md).
 
 | ID | القدرة | المعلم | القرار السابق | معيار القبول |
 |---|---|---|---|---|
@@ -12,14 +12,14 @@
 | R1-06 | Pricing management; branch prices; Single/Multi; Hourly/Match | M1/M3 | O-03,O-04 | كل تركيبات 2×2×2 تستخدم السعر المختار للفرع؛ سعر ناقص لا يسمح بالبدء. |
 | R1-07 | Price snapshot; price-change audit | M1/M3 | ADR-02,O-12 | تغيير السعر أثناء جلسة لا يعدّل فاتورتها؛ جلسة جديدة تستخدم الجديد ويسجل من غيّره. |
 | R1-08 | Start; Open; timer; complete | M1 | O-01,O-03 | تحفظ البداية والنهاية؛ أمثلة التقريب في SHARED_RULES تمر، وينتهي Open بطلب الموظف نيابة عن العميل. |
-| R1-09 | Fixed duration | M3 | O-05 | نهاية المدة والخروج المبكر والتمديد تتبع القرار المعتمد؛ لا إيقاف تلقائي غير مقرر. |
+| R1-09 | Fixed duration | M3 | Resolved: alert-only | انتهاء المدة المخططة ينتج تنبيهًا؛ لا إيقاف أو إكمال تلقائي. |
 | R1-10 | Pause; resume; multiple pauses | M3 | O-02 | الانتقالات صالحة وفترات التوقف محفوظة؛ لا تعدّ فترة مرتين ويطابق المبلغ سياسة التوقف. |
-| R1-11 | Match pricing and completion | M3 | O-04 | العدد والنهاية والتمديد يطابقون القرار؛ لا تحول فاتورة الماتش إلى حساب ساعات. |
+| R1-11 | Match pricing and completion | M3 | Resolved: one Match per Session | المباراة الثانية تحتاج Session جديدة؛ السعر Match ثابت لا يُحسب من الزمن، والموظف ينهيها دون auto-complete بالمؤقت. |
 | R1-12 | Session ownership; manager session-transfer override | M1/M3 | O-07 | يبقى OpenedBy ثابتًا؛ يتغير المسؤول بصلاحية المدير مع السبب والوقت وسجل التسليم. |
-| R1-13 | Invoices; controlled cancel/void | M1/M3 | O-06 | فاتورة واحدة لكل إنهاء مقبول؛ الإلغاء محمي ويحفظ التاريخ؛ لا حذف مالي حر. |
+| R1-13 | Invoices; controlled cancel/void | M1/M3 | Cancel reason resolved; paid-cancel cash effect open | فاتورة واحدة لكل إنهاء مقبول وقد تصدر قبل الدفع؛ الإلغاء محمي ويحفظ التاريخ ويستبعدها من الإيراد الفعال؛ لا حذف مالي حر ولا Refund مفترض. |
 | R1-14 | Cash payments; persistent transactions | M1/M2 | O-03 | الدفع يرتبط بالفاتورة؛ إعادة الطلب/المزامنة لا تحصّل أو تسجل نقدًا مرتين. |
-| R1-15 | Allowed predefined discounts | M3 | O-06 | خصم مسموح فقط للكاشير وبحدوده؛ طلب خصم غير مسموح يُرفض. |
-| R1-16 | Manual discount; manager overrides | M3 | O-06,O-10 | يلزم اعتماد مدير للعملية المعينة؛ يسجل المعتمد والمنفذ والسبب والقيم. |
+| R1-15 | Removed from R1 scope — superseded: predefined discounts | — | BR-SCOPE-010 | Historical ID only; no R1 implementation or acceptance test. |
+| R1-16 | Removed from R1 scope — superseded: manual discounts | — | BR-SCOPE-010 | Historical ID only; no R1 implementation or acceptance test. |
 | R1-17 | Basic shifts | M3 | O-07 | تحفظ الوردية والفرع والكاشير والبداية والنهاية؛ الجلسة النشطة تتبع سياسة التسليم. |
 | R1-18 | Manager-only expenses | M3 | — | الكاشير يُرفض؛ المصروف يحفظ الفرع والمبلغ والوصف/الفئة والفاعل والوقت. |
 | R1-19 | Assets/equipment; quantity inventory | M3 | O-08 | تعديل الكميات صحيح ومقيد بالفرع؛ لا يضيف مبيعات منتجات أو تحويل فروع متقدم. |

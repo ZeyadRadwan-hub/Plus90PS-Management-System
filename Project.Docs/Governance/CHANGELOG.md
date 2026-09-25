@@ -1,5 +1,7 @@
 # سجل التغييرات
 
+> **Historical documentation changelog.** Entries below describe an older planning-copy reconciliation, not the present repository implementation or today's open R1 decisions. Match is now one per Session with employee completion (no timer auto-completion); see [DECISION_REQUESTS_R1.md](DECISION_REQUESTS_R1.md) and [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md).
+
 تغييرات هذه المهمة منفذة في النسخة المستقلة، ولا تعني تنفيذ البرنامج. كل الأقسام غير المعدلة محفوظة نصيًا من الأصل. نطاق R1 الأصلي محفوظ؛ لا إضافة AI أو موقع كاشير أو حذف وظيفة.
 
 | التغيير | السابق | الحالي | السبب/الملفات |

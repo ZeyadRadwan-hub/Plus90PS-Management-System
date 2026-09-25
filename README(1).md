@@ -1,5 +1,7 @@
 # +90 PS — حزمة الخطة المحدّثة
 
+> **HISTORICAL PLANNING-PACK README (2026-09-06).** This is not the current repository entry point; its old relative links and "no code" status describe a separate planning copy. Use [README.md](README.md) and [CURRENT_STATE.md](Project.Docs/Reviews/CURRENT_STATE.md) for this worktree. The older pack's R1 discount statements are superseded; discounts are outside R1.
+
 تم تنفيذ تحديث الوثائق والخطة في نسخة مستقلة بتاريخ 2026-09-06. الأولوية: إطلاق أسرع مع الحفاظ على كامل نطاق Release 1. لم تتغير ملفات OneDrive الأصلية أو الكود أو قاعدة البيانات.
 
 ## ابدأ هنا

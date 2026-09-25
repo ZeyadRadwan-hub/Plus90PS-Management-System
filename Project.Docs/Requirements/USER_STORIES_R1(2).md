@@ -538,7 +538,7 @@ EPIC-RECOVERY   Crash / Power / Backup Recovery
 
 **Priority:** P0
 
-> As the business owner, I want the product to avoid reporting success if required session-completion, invoice, payment, or local sync-intent persistence fails so that financial records remain consistent.
+> As the business owner, I want the product to avoid reporting success if required session-completion, invoice, local sync-intent, or payment persistence (when cash is actually collected) fails so that financial records remain consistent. Issuing an invoice does not require immediate payment.
 
 **Trace:** `FR-FIN-001`, `FR-FIN-002`, `NFR-DATA-002`  
 **Acceptance:** `AC-US-FINANCE-003-*`
