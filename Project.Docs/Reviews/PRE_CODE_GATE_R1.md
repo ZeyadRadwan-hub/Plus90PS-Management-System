@@ -1,6 +1,6 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD for other business implementation.** BE-00 through BE-06 are the explicitly approved narrow slices listed below; REPO-01 is implemented. BE-06 adds only pure Domain Branch/GameConsole foundation and records the approved [R1 technical baseline](../Governance/TECHNICAL_DECISIONS_R1.md). A documented technical decision is **not** implemented Database/Auth/Sync code or a globally approved physical schema. No ConsoleOccupancy, persistence, full Session model, hourly charge formula, pricing management, invoice/payment workflow, authentication, sync, or frontend work is unlocked.
+**CURRENT STATE: HOLD for other business implementation.** BE-00 through BE-07 are the explicitly approved narrow slices listed below; REPO-01 is implemented. BE-06 adds only pure Domain Branch/GameConsole foundation and records the approved [R1 technical baseline](../Governance/TECHNICAL_DECISIONS_R1.md). BE-07 adds only the pure Domain Session aggregate core: it combines SessionTerms with encapsulated SessionTiming, stores supplied Session/Branch/Console/opener IDs, initializes current responsibility from the opener, enforces Open/Fixed-only Pause/Resume, and retains captured pricing. A documented technical decision is **not** implemented Database/Auth/Sync code or a globally approved physical schema. No ConsoleOccupancy, persistence, responsibility transfer, hourly charge formula, pricing management, invoice/payment workflow, employee/RBAC, authentication, sync, or frontend work is unlocked.
 
 | Scope | Authorization |
 |---|---|
@@ -11,6 +11,7 @@
 | BE-04 Money Rounding Domain Rules | APPROVED / IMPLEMENTED — unit tested; supplied amount only |
 | BE-05 Pricing Matrix Domain | APPROVED / IMPLEMENTED — unit tested; immutable entries/catalog and existing snapshot only |
 | BE-06 Branch & Console Domain Foundation | APPROVED / IMPLEMENTED — unit tested; supplied IDs, Branch, GameConsole configuration/activation only |
+| BE-07 Session Aggregate Core | APPROVED / IMPLEMENTED — unit tested; pure Domain identity, terms, timing lifecycle, Pause eligibility, captured pricing only |
 | R1 technical architecture baseline | APPROVED / DOCUMENTED — future design direction, **not** Database/Auth/Sync implementation |
 | REPO-01 Repository & Documentation Reconciliation | IMPLEMENTED — documentation/repository status only; no business code |
 | Database implementation | NOT AUTHORIZED YET |
@@ -18,7 +19,7 @@
 | Authentication | NOT AUTHORIZED YET |
 | Employees/RBAC | NOT AUTHORIZED YET |
 | ConsoleOccupancy / Console persistence / Pricing management | NOT AUTHORIZED YET |
-| Full Session model and persistence | NOT AUTHORIZED YET |
+| Session persistence, events, occupancy, and responsibility transfer | NOT AUTHORIZED YET |
 | Invoices/Payments | NOT AUTHORIZED YET |
 | Offline Sync | NOT AUTHORIZED YET |
 | WPF Frontend | NOT AUTHORIZED TO CODEX |
@@ -45,7 +46,7 @@
 | Diagrams consistent with approved design and readable | PARTIAL | Editable sources are not tracked in this worktree; obtain/inspect real sources before claiming source/export reconciliation |
 | Duplicate/legacy documents reconciled in actual repo | REPO-01 PARTIAL | Current-vs-historical status and identified contradictions reconciled; missing design-pack files and old historical links still require source recovery/review |
 | Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
-| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-06 narrow slices approved as listed above | Direct narrow task authorizations; BE-07 and later remain on HOLD |
+| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-07 narrow slices approved as listed above | Direct narrow task authorizations; BE-08 and later remain on HOLD |
 
 ## Safe next order
 
