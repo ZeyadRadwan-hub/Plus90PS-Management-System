@@ -1,17 +1,18 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD for other business implementation.** BE-00 Backend Foundation, BE-01 Billable Time Domain Rules, BE-01.5 API setup, BE-01.6 solution cleanup, and BE-02 Session Timing & Pause Lifecycle are the approved implementation slices. This is a completed **checklist template and draft design package**, not completion of every design decision. BE-02 covers timing only; no persistence, full Session model, money, authentication, sync, or frontend work is unlocked.
+**CURRENT STATE: HOLD for other business implementation.** BE-00 Backend Foundation, BE-01 Billable Time Domain Rules, BE-01.5 API setup, BE-01.6 solution cleanup, BE-02 Session Timing & Pause Lifecycle, and BE-03 Session Types & Pricing Context Domain are the approved implementation slices. This is a completed **checklist template and draft design package**, not completion of every design decision. BE-02 covers timing; BE-03 covers immutable terms and captured pricing only. No persistence, full Session model, final money calculation, authentication, sync, or frontend work is unlocked.
 
 | Scope | Authorization |
 |---|---|
 | BE-00 Backend Foundation | APPROVED FOR IMPLEMENTATION — 2026-09-25 |
 | BE-01 Billable Time Domain Rules | APPROVED / IMPLEMENTED — unit tested |
 | BE-02 Session Timing & Pause Lifecycle | APPROVED / IMPLEMENTED — unit tested; timing only |
+| BE-03 Session Types & Pricing Context Domain | APPROVED / IMPLEMENTED — unit tested; terms and pricing snapshot only |
 | Database implementation | NOT AUTHORIZED YET |
 | EF Core persistence | NOT AUTHORIZED YET |
 | Authentication | NOT AUTHORIZED YET |
 | Employees/RBAC | NOT AUTHORIZED YET |
-| Console/Pricing | NOT AUTHORIZED YET |
+| Console entity / Pricing management | NOT AUTHORIZED YET |
 | Full Session model and persistence | NOT AUTHORIZED YET |
 | Invoices/Payments | NOT AUTHORIZED YET |
 | Offline Sync | NOT AUTHORIZED YET |
@@ -40,7 +41,7 @@
 | Diagrams consistent with approved design and readable | PARTIAL | Editable sources fixed only where affected, exports reviewed |
 | Duplicate/legacy documents reconciled in actual repo | NOT DONE | canonical index + diffs + archived old versions + links checked |
 | Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
-| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-02 narrow slices approved as listed above | Direct narrow task authorizations; all other slices remain on HOLD |
+| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-03 narrow slices approved as listed above | Direct narrow task authorizations; all other slices remain on HOLD |
 
 ## Safe next order
 
