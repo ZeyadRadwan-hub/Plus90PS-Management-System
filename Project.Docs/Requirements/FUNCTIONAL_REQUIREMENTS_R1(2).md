@@ -287,6 +287,9 @@ The system shall exclude paused duration from billable active duration.
 ## FR-PAUSE-007
 The system shall prevent invalid pause/resume state transitions.
 
+## FR-PAUSE-008
+The future full Session/Application workflow shall allow Pause/Resume only for Open and Fixed Sessions and reject Pause/Resume for Match Sessions. The existing BE-02 timing component remains type-agnostic.
+
 ---
 
 # 13. Single/Multi Change
@@ -397,7 +400,7 @@ The system shall preserve invoice history.
 The system shall prevent unrestricted destructive invoice deletion.
 
 ## FR-INVOICE-006
-The system shall support an authorized protected cancel/void flow.
+The system shall support an authorized protected cancel/void flow only for an eligible unpaid Invoice; an Invoice with a successful recorded Payment cannot be cancelled (FR-INVOICE-012).
 
 ## FR-INVOICE-007
 A cancelled/void invoice shall remain traceable.
@@ -413,6 +416,12 @@ If a cancellation/void reason is entered, the system shall preserve it with the 
 
 ## FR-INVOICE-011
 The system shall allow an invoice to be issued before cash payment. Invoice creation shall not require payment in the same operation.
+
+## FR-INVOICE-012
+The system shall reject Cancel of any Invoice with a successful recorded Payment. Protected Cancel is available only for an eligible unpaid Invoice; cancelled unpaid invoices remain historical and excluded from active revenue. Cancel shall not automatically issue a cash refund/reversal.
+
+## FR-INVOICE-013
+For an Open or Fixed Session with Pause intervals, the customer Invoice shall show the total free paused duration, not each individual interval by default. Internal pause events remain available for history/audit.
 
 ---
 

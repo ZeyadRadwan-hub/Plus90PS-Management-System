@@ -1,6 +1,6 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD for other business implementation.** BE-00 Backend Foundation, BE-01 Billable Time Domain Rules, BE-01.5 API setup, BE-01.6 solution cleanup, BE-02 Session Timing & Pause Lifecycle, BE-03 Session Types & Pricing Context Domain, BE-04 Money Rounding Domain Rules, and BE-05 Pricing Matrix Domain are the approved implementation slices. REPO-01 documentation reconciliation is implemented without production-code changes. This is a **checklist and draft design package**, not completion of every design decision. BE-05 is only an immutable Domain catalog for one already-selected branch context. No Branch entity, persistence, full Session model, hourly charge formula, pricing management, invoice/payment workflow, authentication, sync, or frontend work is unlocked.
+**CURRENT STATE: HOLD for other business implementation.** BE-00 through BE-06 are the explicitly approved narrow slices listed below; REPO-01 is implemented. BE-06 adds only pure Domain Branch/GameConsole foundation and records the approved [R1 technical baseline](../Governance/TECHNICAL_DECISIONS_R1.md). A documented technical decision is **not** implemented Database/Auth/Sync code or a globally approved physical schema. No ConsoleOccupancy, persistence, full Session model, hourly charge formula, pricing management, invoice/payment workflow, authentication, sync, or frontend work is unlocked.
 
 | Scope | Authorization |
 |---|---|
@@ -10,12 +10,14 @@
 | BE-03 Session Types & Pricing Context Domain | APPROVED / IMPLEMENTED — unit tested; terms and pricing snapshot only |
 | BE-04 Money Rounding Domain Rules | APPROVED / IMPLEMENTED — unit tested; supplied amount only |
 | BE-05 Pricing Matrix Domain | APPROVED / IMPLEMENTED — unit tested; immutable entries/catalog and existing snapshot only |
+| BE-06 Branch & Console Domain Foundation | APPROVED / IMPLEMENTED — unit tested; supplied IDs, Branch, GameConsole configuration/activation only |
+| R1 technical architecture baseline | APPROVED / DOCUMENTED — future design direction, **not** Database/Auth/Sync implementation |
 | REPO-01 Repository & Documentation Reconciliation | IMPLEMENTED — documentation/repository status only; no business code |
 | Database implementation | NOT AUTHORIZED YET |
 | EF Core persistence | NOT AUTHORIZED YET |
 | Authentication | NOT AUTHORIZED YET |
 | Employees/RBAC | NOT AUTHORIZED YET |
-| Console entity / Pricing management | NOT AUTHORIZED YET |
+| ConsoleOccupancy / Console persistence / Pricing management | NOT AUTHORIZED YET |
 | Full Session model and persistence | NOT AUTHORIZED YET |
 | Invoices/Payments | NOT AUTHORIZED YET |
 | Offline Sync | NOT AUTHORIZED YET |
@@ -33,17 +35,17 @@
 
 | Gate check | Status now | Evidence required to change to Done |
 |---|---|---|
-| User approves true product decisions Q-BIZ-01..Q-OPS-01 relevant to first implementation slice | BLOCKED | Written answers, owner/date, updated canonical rules and dependent docs |
+| User approves true product decisions relevant to later slices | PARTIAL | Pause eligibility and paid-invoice prohibition resolved in BE-06; partial Payment, unpaid Cancel/Void, ownership/staffing, reporting boundary, and hosting remain open where relevant |
 | Database dictionary: exact fields/types/FK/NULL/unique, local-central mapping, provider-specific plan | DRAFT | Signed-off dictionary & schema design; SQLite/SQL Server differences tested later |
-| Session/financial state and cash cancellation are consistent | BLOCKED | Explicit amounts/payment flow, rounding/version/paid-cancel model + acceptance tests |
+| Session/financial state and cash cancellation are consistent | PARTIAL | Paid Invoice cannot be cancelled; future full workflow must define partial Payment and eligible unpaid Cancel/Void states and test them |
 | API endpoint/DTO/error/retry/OpenAPI contract reviewed | DRAFT | Complete versioned contract with matching auth and state schemas |
-| PIN/device/lease/recovery and branch ownership security reviewed | BLOCKED | Threat model and signed authority/revocation policy approved |
-| Offline-sync event/receipt/ordering/conflict resolution design reviewed | DRAFT | Stable keys, failure matrix, safe correction path, local/central transactions specified |
+| PIN/device/lease/recovery and branch ownership security reviewed | BASELINE APPROVED / IMPLEMENTATION NOT STARTED | Technical baseline recorded; concrete threat review, ownership grants, provisioning, keys, and adversarial tests remain |
+| Offline-sync event/receipt/ordering/conflict resolution design reviewed | BASELINE APPROVED / IMPLEMENTATION NOT STARTED | Technical baseline recorded; concrete schema/contracts, failure tests, and rollout still remain |
 | UI implementation contract accepted as target, screenshots labeled old | DOC DONE / IMPLEMENTATION NOT STARTED | UI reviewer consent; later WPF EN/AR and RBAC tests |
 | Diagrams consistent with approved design and readable | PARTIAL | Editable sources are not tracked in this worktree; obtain/inspect real sources before claiming source/export reconciliation |
 | Duplicate/legacy documents reconciled in actual repo | REPO-01 PARTIAL | Current-vs-historical status and identified contradictions reconciled; missing design-pack files and old historical links still require source recovery/review |
 | Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
-| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-05 narrow slices approved as listed above | Direct narrow task authorizations; BE-06 and later remain on HOLD |
+| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-06 narrow slices approved as listed above | Direct narrow task authorizations; BE-07 and later remain on HOLD |
 
 ## Safe next order
 

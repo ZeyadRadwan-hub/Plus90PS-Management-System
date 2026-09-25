@@ -615,7 +615,7 @@ Release 1 records cash payments.
 
 Payment must be associated with the relevant invoice/financial operation.
 
-An invoice may be issued before Payment; cash receipt is a separate business step. Release 1 supports Cash only. The cash refund/reversal effect of cancelling a paid invoice remains unresolved.
+An invoice may be issued before Payment; cash receipt is a separate business step. Release 1 supports Cash only. Once an Invoice has a successful recorded Payment, Cancel is prohibited; protected Cancel applies only to eligible unpaid Invoices. No automatic refund/reversal follows from Cancel. The distinction between Cancel and Void for unpaid states remains open.
 
 ## BRQ-FIN-004
 

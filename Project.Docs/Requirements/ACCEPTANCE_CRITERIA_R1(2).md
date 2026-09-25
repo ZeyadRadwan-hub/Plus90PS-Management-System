@@ -546,6 +546,16 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 **When** final Hourly billing is calculated  
 **Then** that paused interval is excluded from billable active time.
 
+### AC-US-SESSION-005-C — Open/Fixed Eligible, Match Ineligible
+
+**Given** an active Open or Fixed Session
+**When** an authorized employee Pauses it
+**Then** the future Session workflow accepts the Pause and records its timestamp.
+
+**Given** an active Match Session
+**When** Pause is attempted
+**Then** the future Session workflow rejects it without changing Session timing.
+
 ---
 
 ## US-SESSION-006 — Resume
@@ -562,6 +572,12 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 **Given** the session is not Paused  
 **When** Resume is attempted  
 **Then** the transition is rejected.
+
+### AC-US-SESSION-006-C — Match Cannot Resume
+
+**Given** a Match Session
+**When** Resume is attempted
+**Then** the future Session workflow rejects it; Match is never made eligible for Pause/Resume.
 
 ---
 
@@ -779,6 +795,12 @@ Acceptance table:
 **Then** the invoice can exist without a Payment record
 **And** a later cash payment is a separate business step.
 
+### AC-US-FINANCE-001-D — Total Paused Duration
+
+**Given** an Open or Fixed Session has multiple completed Pause intervals
+**When** its customer Invoice is created
+**Then** it shows one total non-billable paused duration, not an itemized list of Pause intervals.
+
 ---
 
 ## US-FINANCE-002 — Cash Payment
@@ -812,7 +834,7 @@ Acceptance table:
 
 ### AC-US-FINANCE-004-A
 
-**Given** an invoice exists  
+**Given** an eligible unpaid invoice exists
 **When** an authorized protected cancel/void succeeds  
 **Then** the original invoice remains historically traceable  
 **And** it is not treated as a normal active-revenue invoice.
@@ -829,6 +851,18 @@ Acceptance table:
 **Given** an authorized Cancel/Void flow  
 **When** the user enters an optional reason  
 **Then** the reason is preserved in the relevant history/audit context.
+
+### AC-US-FINANCE-004-D — Paid Invoice Cannot Be Cancelled
+
+**Given** an Invoice has a successful recorded Payment
+**When** an authorized user attempts Cancel
+**Then** the operation is rejected, the paid Invoice and Payment remain historical, and no automatic refund/reversal is created.
+
+### AC-US-FINANCE-004-E — Eligible Unpaid Cancel
+
+**Given** an eligible unpaid Invoice
+**When** an authorized protected Cancel succeeds
+**Then** the Invoice remains historical and is excluded from active revenue; the optional reason rule still applies.
 
 ---
 

@@ -414,6 +414,9 @@ The design must support multiple Pause/Resume cycles without losing earlier paus
 ## BR-PAUSE-006 — Paused Time Is Counted Once
 Paused periods must not be double-counted when calculating billable active duration.
 
+## BR-PAUSE-007 — Pause Eligibility by Session Type
+Pause/Resume is allowed only for Open and Fixed Sessions. Match Sessions cannot Pause/Resume. The future full Session aggregate/Application workflow must enforce this; the BE-02 timing component alone does not decide eligibility.
+
 ---
 
 # 15. Fixed Session Rules
@@ -512,7 +515,7 @@ Retry/synchronization must not create duplicate invoices for the same accepted o
 Operational users must not freely erase financial invoice history.
 
 ## BR-INVOICE-005 — Protected Cancel/Void
-Cancellation/void is a protected operation requiring appropriate authorization.
+Cancellation/void of an eligible unpaid Invoice is a protected operation requiring appropriate authorization. A successfully paid Invoice cannot be cancelled (BR-INVOICE-011).
 
 ## BR-INVOICE-006 — Cancelled/Void Record Remains Historical
 A cancelled/void invoice remains traceable in history.
@@ -527,7 +530,13 @@ The UI must not report a successful invoice/payment completion before required l
 The protected Cancel/Void flow may include a reason field, but entering a reason is optional. A valid authorized cancellation must be able to proceed without a reason. If a reason is entered, it is preserved with the cancellation/audit context.
 
 ## BR-INVOICE-010 — Invoice May Precede Payment
-An invoice may be issued before cash payment. Payment is a separate business step; issuing an invoice does not require immediate cash receipt. The cash effect of cancelling an already-paid invoice remains unresolved.
+An invoice may be issued before cash payment. Payment is a separate business step; issuing an invoice does not require immediate cash receipt.
+
+## BR-INVOICE-011 — Paid Invoice Cannot Be Cancelled
+Once an Invoice has a successful recorded Payment, Cancel must be rejected. Protected Cancel applies only to an eligible unpaid Invoice; an unpaid cancelled Invoice remains historical and is excluded from active revenue. Cancel does not automatically refund or reverse cash, and neither paid nor cancelled invoices are destructively deleted. The distinction between Cancel and Void for unpaid states remains to be finalized.
+
+## BR-INVOICE-012 — Total Paused Duration on Invoice
+If an Open or Fixed Session has one or more Pause intervals, its customer-facing Invoice shows the total free/non-billable paused duration. Individual intervals may remain in history/audit but are not listed on the customer Invoice by default.
 
 ---
 

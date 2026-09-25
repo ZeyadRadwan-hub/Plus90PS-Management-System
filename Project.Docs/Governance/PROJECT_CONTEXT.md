@@ -1,6 +1,6 @@
 # +90 PS — Project Context for Codex and reviewers
 
-**Document origin:** Release 1 pre-code design snapshot. BE-00 through BE-04 now exist as code; see [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md). Never read old `Final` as implemented. Developer/user: Zeyad; collaboration preferences are in root `AboutZeyad.md` (share only facts he explicitly wants in repo, and keep personal details out of public repositories).
+**Document origin:** Release 1 pre-code design snapshot. BE-00 through BE-06 now have explicitly approved narrow code slices; see [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md). The BE-06 [technical baseline](TECHNICAL_DECISIONS_R1.md) is documented, not implemented Database/Auth/Sync. Never read old `Final` as implemented. Developer/user: Zeyad; collaboration preferences are in root `AboutZeyad.md` (share only facts he explicitly wants in repo, and keep personal details out of public repositories).
 
 ## Product
 
@@ -8,10 +8,10 @@ Multi-branch-capable PlayStation shop management product, initial single shared 
 
 ## Binding rules
 
-- Billable positive seconds ceil minute, then round UP to next quarter hour only if 1–3 minutes remain; free Pause; no minimum. EGP .00–.49 drop fraction, .50–.99 up whole EGP, then move UP to next multiple of five only if +1 or +2 EGP.
+- Billable positive seconds ceil minute, then round UP to next quarter hour only if 1–3 minutes remain; free Pause only for Open/Fixed, never Match; future Invoice shows total paused duration; no minimum. EGP .00–.49 drop fraction, .50–.99 up whole EGP, then move UP to next multiple of five only if +1 or +2 EGP.
 - Fixed Hours expiry = alert only; Match = fixed branch price/defined duration and employee-ended; mode frozen during session.
 - Owner/Manager can start/end shift for selected employee; handover before closing when sessions active, original opener retained.
-- Protected Manager/Owner invoice Cancel/Void with optional reason; history kept; paid-invoice cash adjustment remains OPEN. Monthly closing is read-only financial review.
+- Protected Manager/Owner Cancel applies only to eligible unpaid Invoices, with optional reason and historical retention; an Invoice with successful recorded Payment cannot be cancelled. Unpaid Cancel/Void distinction remains a narrow open question. Monthly closing is read-only financial review.
 - First 5 PIN failures→warning+20s temporary lock/security event; another five→SecurityLocked/engineer process. Separate subscription lock. Offline paid lease >10d→max72h; <=10d→remaining paid time+10h; no local time tampering extension.
 - UI target modifications in `UX_UI/UI_IMPLEMENTATION_OVERRIDE_R1.md` OVERRIDE old PNG control behavior; original images are visual/style references only.
 
