@@ -1,10 +1,11 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD for business implementation; BE-00 Backend Foundation only is APPROVED FOR IMPLEMENTATION by Zeyad on 2026-09-25.** This is a completed **checklist template and draft design package**, not completion of every design decision. This narrow approval permits backend solution structure, project references, a minimal API host with `GET /health`, and foundation tests only.
+**CURRENT STATE: HOLD for other business implementation.** BE-00 Backend Foundation and BE-01 Billable Time Domain Rules are the only approved implementation slices. This is a completed **checklist template and draft design package**, not completion of every design decision. No persistence, session, money, authentication, sync, or frontend work is unlocked.
 
 | Scope | Authorization |
 |---|---|
 | BE-00 Backend Foundation | APPROVED FOR IMPLEMENTATION — 2026-09-25 |
+| BE-01 Billable Time Domain Rules | APPROVED / IMPLEMENTED — unit tested |
 | Database implementation | NOT AUTHORIZED YET |
 | EF Core persistence | NOT AUTHORIZED YET |
 | Authentication | NOT AUTHORIZED YET |
@@ -38,7 +39,7 @@
 | Diagrams consistent with approved design and readable | PARTIAL | Editable sources fixed only where affected, exports reviewed |
 | Duplicate/legacy documents reconciled in actual repo | NOT DONE | canonical index + diffs + archived old versions + links checked |
 | Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
-| Zeyad explicitly authorizes first Codex coding slice | BE-00 FOUNDATION ONLY APPROVED — 2026-09-25 | Direct BE-00 task authorization; all other slices remain on HOLD |
+| Zeyad explicitly authorizes Codex coding slices | BE-00 and BE-01 ONLY APPROVED | Direct narrow task authorizations; all other slices remain on HOLD |
 
 ## Safe next order
 
