@@ -43,6 +43,9 @@ The system shall support authorized PIN reset to a new PIN.
 ## FR-AUTH-008
 The system shall not provide a function that reveals the employee's previous readable PIN.
 
+## FR-AUTH-009
+The future authentication flow shall recognize an active Employee identity across Branches of that Employee's Business, subject to valid PIN, device/branch authority, and permissions. A deactivated Employee shall be unable to authenticate or operate in any Branch of that Business.
+
 ---
 
 # 3. PIN Security
@@ -108,6 +111,9 @@ The UI shall not expose Manager/Owner administration as normal Cashier functiona
 ## FR-RBAC-009
 The UX role visibility baseline shall follow `RBAC_MATRIX_R1.md`, while trusted authorization enforcement is finalized in Security/RBAC Design.
 
+## FR-RBAC-010
+Owner, Manager, and Cashier shall be roles of the same Business-scoped Employee model; Owner shall not gain access to another Business merely by having the Owner role.
+
 ---
 
 # 5. Branch
@@ -120,6 +126,12 @@ The system shall associate branch-scoped records with the correct branch.
 
 ## FR-BRANCH-003
 The system shall prevent users from viewing or modifying unauthorized branch data through trusted controls.
+
+## FR-BRANCH-004
+The system shall associate each Branch with one Business; one Business may have multiple Branches. Employee identity shall be Business-scoped rather than permanently assigned to one Branch.
+
+## FR-BRANCH-005
+Normal Employee deactivation shall be Business-wide and shall preserve historical references to that Employee rather than physically deleting them.
 
 ---
 

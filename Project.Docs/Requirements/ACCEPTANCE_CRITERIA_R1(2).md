@@ -36,7 +36,7 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 
 ### AC-US-AUTH-001-A — Successful Login
 
-**Given** an active employee exists for the current branch  
+**Given** an active employee belongs to the current Branch's Business<br>
 **And** the employee has a valid personal PIN  
 **And** the system state permits authentication  
 **When** the employee enters the correct PIN  
@@ -93,6 +93,13 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 **When** that employee attempts login  
 **Then** authentication is rejected  
 **And** no active operational user context is created for that employee.
+
+### AC-US-AUTH-003-B — Business-Wide Deactivation
+
+**Given** an Employee belongs to Business X with Branch A and Branch B<br>
+**When** that Employee is deactivated<br>
+**Then** later authentication and operation are rejected at both Branches<br>
+**And** previously recorded Session opener IDs and other historical references remain intact.
 
 ---
 
@@ -329,6 +336,21 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 **When** the user attempts to request or manipulate access to Branch B operational data  
 **Then** access is rejected  
 **And** Branch B data is not returned/modified.
+
+## US-BRANCH-003 — Business and Employee Scope
+
+### AC-US-BRANCH-003-A — One Business, Multiple Branches
+
+**Given** Branch A and Branch B belong to Business X<br>
+**And** an active Employee belongs to Business X<br>
+**Then** that same Employee identity is within Business scope at both Branches<br>
+**Without** adding a BranchId to Employee. PIN, device authority, and action permissions remain separate checks.
+
+### AC-US-BRANCH-003-B — Cross-Business Boundary
+
+**Given** Branch C belongs to Business Y<br>
+**When** an Employee from Business X, including an Owner, is checked against Branch C<br>
+**Then** the Employee is outside Business scope; Owner role does not grant cross-Business access.
 
 ---
 

@@ -123,6 +123,12 @@ Each staff member who uses the application must have an identifiable application
 ## BR-ACTOR-005 — Shared PC
 Multiple employees may use the same branch PC over time. The Windows user account is not sufficient as the business identity.
 
+## BR-ACTOR-006 — Business-Wide Employee Identity
+An Employee belongs to one Business, not permanently to one Branch. The same active Employee identity and personal PIN must later be recognizable at Branches of that Business, subject to future authentication and authorization controls. Employee has no permanent BranchId.
+
+## BR-ACTOR-007 — Business-Wide Deactivation and History
+Deactivating an Employee disables later authentication and operation at every Branch of that Business. Normal removal is deactivation, not physical deletion; prior Sessions and other history retain the original Employee ID.
+
 ---
 
 # 5. Branch and Ownership Rules
@@ -144,6 +150,9 @@ A Manager does not automatically gain access to unrelated branches.
 
 ## BR-BRANCH-006 — Branch-Specific Configuration
 Release 1 must allow branch-specific operational configuration where required, especially pricing.
+
+## BR-BRANCH-007 — Business Owns Branches
+One Business may contain multiple Branches; each Branch belongs to one Business. Owner is an Employee role scoped to one Business, not a separate entity or unrestricted cross-Business identity.
 
 ---
 
