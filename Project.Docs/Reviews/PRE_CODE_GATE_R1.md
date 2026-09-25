@@ -1,6 +1,19 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD — NOT APPROVED TO GENERATE PRODUCTION CODE.** This is a completed **checklist template and draft design package**, not completion of every design decision. Codex can read/inspect repo on request; NO EF Models, SQL/SQLite DB, DbContext, migrations, WPF or API generation before explicit user approval.
+**CURRENT STATE: HOLD for business implementation; BE-00 Backend Foundation only is APPROVED FOR IMPLEMENTATION by Zeyad on 2026-09-25.** This is a completed **checklist template and draft design package**, not completion of every design decision. This narrow approval permits backend solution structure, project references, a minimal API host with `GET /health`, and foundation tests only.
+
+| Scope | Authorization |
+|---|---|
+| BE-00 Backend Foundation | APPROVED FOR IMPLEMENTATION — 2026-09-25 |
+| Database implementation | NOT AUTHORIZED YET |
+| EF Core persistence | NOT AUTHORIZED YET |
+| Authentication | NOT AUTHORIZED YET |
+| Employees/RBAC | NOT AUTHORIZED YET |
+| Console/Pricing | NOT AUTHORIZED YET |
+| Sessions | NOT AUTHORIZED YET |
+| Invoices/Payments | NOT AUTHORIZED YET |
+| Offline Sync | NOT AUTHORIZED YET |
+| WPF Frontend | NOT AUTHORIZED TO CODEX |
 
 ## What exists as draft outputs of this package
 
@@ -24,8 +37,8 @@
 | UI implementation contract accepted as target, screenshots labeled old | DOC DONE / IMPLEMENTATION NOT STARTED | UI reviewer consent; later WPF EN/AR and RBAC tests |
 | Diagrams consistent with approved design and readable | PARTIAL | Editable sources fixed only where affected, exports reviewed |
 | Duplicate/legacy documents reconciled in actual repo | NOT DONE | canonical index + diffs + archived old versions + links checked |
-| Real Git repository inventory incl. any existing code/migrations/data | NOT VERIFIED | `git status`, tree, versions, DB inventory, preservation plan; cannot equate historical review with current repo |
-| Zeyad explicitly authorizes first Codex coding slice | NOT GIVEN | direct approval after checking this file; label `APPROVED` + scope/date |
+| Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
+| Zeyad explicitly authorizes first Codex coding slice | BE-00 FOUNDATION ONLY APPROVED — 2026-09-25 | Direct BE-00 task authorization; all other slices remain on HOLD |
 
 ## Safe next order
 
