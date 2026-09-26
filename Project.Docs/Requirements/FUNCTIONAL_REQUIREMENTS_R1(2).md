@@ -97,7 +97,7 @@ The system shall prevent a Cashier from changing pricing unless a later explicit
 The system shall prevent a Cashier from creating expenses unless a later explicit permission rule authorizes it.
 
 ## FR-RBAC-005
-The system shall require appropriate authorization for protected invoice cancel/void actions.
+The system shall require appropriate authorization for protected invoice Cancel actions.
 
 ## FR-RBAC-006
 The system shall require appropriate authorization for session-responsibility transfer.
@@ -412,19 +412,19 @@ The system shall preserve invoice history.
 The system shall prevent unrestricted destructive invoice deletion.
 
 ## FR-INVOICE-006
-The system shall support an authorized protected cancel/void flow only for an eligible unpaid Invoice; an Invoice with a successful recorded Payment cannot be cancelled (FR-INVOICE-012).
+The system shall support an authorized protected Cancel action only for an eligible unpaid Invoice; an Invoice with a successful recorded Payment cannot be cancelled (FR-INVOICE-012). R1 has no separate Void action or state.
 
 ## FR-INVOICE-007
-A cancelled/void invoice shall remain traceable.
+A cancelled invoice shall remain traceable.
 
 ## FR-INVOICE-008
-A cancelled/void invoice shall not count as valid active revenue according to the final financial rule.
+A cancelled invoice shall not count as valid active revenue. Cash revenue comes from successful Payment, not Invoice issuance.
 
 ## FR-INVOICE-009
-The cancel/void workflow shall provide an optional reason field. Leaving the reason empty shall not by itself prevent an otherwise authorized valid cancellation/void.
+The Cancel workflow shall provide an optional reason field. Leaving the reason empty shall not by itself prevent an otherwise authorized valid cancellation.
 
 ## FR-INVOICE-010
-If a cancellation/void reason is entered, the system shall preserve it with the relevant history/audit context.
+If a cancellation reason is entered, the system shall preserve it with the relevant history/audit context.
 
 ## FR-INVOICE-011
 The system shall allow an invoice to be issued before cash payment. Invoice creation shall not require payment in the same operation.
@@ -450,6 +450,12 @@ The payment shall become locally persistent before success is shown.
 
 ## FR-PAY-004
 A retried sync of the same accepted payment shall not create another payment.
+
+## FR-PAY-005
+The system shall permit zero or one full Cash Payment per Invoice. Payment amount shall be strictly positive and equal the Invoice final amount. Partial payments and installments shall be rejected; duplicate InvoiceId payment records shall be prevented locally and centrally.
+
+## FR-PAY-006
+The system shall record the explicitly open BusinessDay of cash receipt on the Payment, even if the Invoice was issued on an earlier BusinessDay.
 
 ---
 
@@ -490,6 +496,19 @@ A handover shall preserve the original session opener and set the receiving Cash
 
 ## FR-SHIFT-008
 The remaining operational/session responsibility after the handover shall be attributed to the receiving Cashier, and the transfer shall be auditable.
+
+---
+
+# 20A. Business Day
+
+## FR-DAY-001
+An authorized Start Day action shall create an open BusinessDay for the current Branch and capture its starting actor and UTC time. A second simultaneous open day for that Branch shall be rejected.
+
+## FR-DAY-002
+An explicit authorized End Day action shall capture ending actor and UTC time, not earlier than Start. Calendar midnight and application restart shall not close a BusinessDay automatically; an open day shall remain recoverable after restart.
+
+## FR-DAY-003
+Sessions, Invoices, Payments and Expenses shall be associated with the BusinessDay of their respective operation. An Invoice and its later Payment may have different BusinessDayIds. Start Day/End Day authorization and the effect of active Sessions on End Day need separate workflow approval; do not infer them from Shift rules.
 
 ---
 
@@ -537,10 +556,10 @@ Console devices shall continue to use Console Management and shall not be duplic
 # 23. Reports
 
 ## FR-REPORT-001
-Authorized users shall be able to view daily reports.
+Authorized users shall be able to view a daily report for one selected explicit BusinessDay.
 
 ## FR-REPORT-002
-Authorized users shall be able to view weekly reports.
+Authorized users shall be able to view a selected six-calendar-month report; Weekly is not an R1 period.
 
 ## FR-REPORT-003
 Authorized users shall be able to view monthly reports.
@@ -560,6 +579,8 @@ The system shall provide operational Profit reporting.
 ## FR-REPORT-008
 Operational Profit shall be derived as Revenue minus Expenses for the R1 reporting model.
 
+Successful Cash Payments shall contribute Revenue to Payment.BusinessDayId; Expenses shall contribute to Expense.BusinessDayId. Invoice issuance alone shall not contribute Cash revenue.
+
 ## FR-REPORT-009
 Reports shall respect branch/ownership authorization.
 
@@ -568,6 +589,9 @@ The product may provide an optional Owner monthly review action.
 
 ## FR-REPORT-011
 The monthly review shall be read-only with respect to financial state: it shall not lock a period or mutate invoice, payment, revenue, expense, or profit records merely because the review was opened/completed.
+
+## FR-REPORT-012
+Monthly, selected six-calendar-month and Yearly reports shall select BusinessDays by Branch timezone calendar labels (R1 default Africa/Cairo), while stored instants remain UTC. The reports shall derive totals from Payment and Expense records rather than a materialized report table.
 
 ---
 
@@ -772,7 +796,7 @@ The former `OFR-001` through `OFR-005` UX-blocking business decisions are resolv
 
 ```text
 OFR-001 → handover active sessions before shift close.
-OFR-002 → Cancel/Void reason is optional.
+OFR-002 → Cancel reason is optional.
 OFR-003 → minimum asset quantity scope is defined.
 OFR-004 → monthly review is read-only.
 OFR-005 → offline does not elevate permissions.

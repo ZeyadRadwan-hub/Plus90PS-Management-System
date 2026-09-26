@@ -287,21 +287,21 @@ Criteria marked `TBD/BLOCKED` must not be treated as final until the related ope
 
 ---
 
-## US-RBAC-004 — Protect Cancel/Void
+## US-RBAC-004 — Protect Invoice Cancel
 
 ### AC-US-RBAC-004-A
 
-**Given** a Cashier lacks protected cancel/void permission  
-**When** the Cashier attempts to cancel/void an invoice  
+**Given** a Cashier lacks protected Cancel permission<br>
+**When** the Cashier attempts to cancel an invoice<br>
 **Then** the operation is rejected.
 
 ### AC-US-RBAC-004-B — Authorized Flow
 
 **Given** an authorized Manager/Owner  
-**When** the protected cancel/void flow is completed  
+**When** the protected Cancel flow is completed<br>
 **Then** the original invoice remains historically traceable.
 
-**And** the Cancel/Void reason field is optional rather than required.
+**And** the Cancel reason field is optional rather than required.
 
 ---
 
@@ -839,6 +839,20 @@ Acceptance table:
 **Given** the same accepted payment sync operation is retried  
 **Then** a duplicate payment is not created.
 
+### AC-US-FINANCE-002-C — Full Settlement Only
+
+**Given** an unpaid, uncancelled Invoice has a positive final amount<br>
+**When** a Cash Payment is accepted<br>
+**Then** its amount equals the Invoice final amount<br>
+**And** a partial/zero/negative amount or a second Payment for the same Invoice is rejected.
+
+### AC-US-FINANCE-002-D — Later Business Day
+
+**Given** an Invoice was issued on BusinessDay A without Payment<br>
+**When** its full Cash Payment is accepted while BusinessDay B is open<br>
+**Then** the Invoice retains BusinessDay A and the Payment records BusinessDay B<br>
+**And** Cash revenue belongs to BusinessDay B, not BusinessDay A.
+
 ---
 
 ## US-FINANCE-003 — Financial Consistency
@@ -852,25 +866,25 @@ Acceptance table:
 
 ---
 
-## US-FINANCE-004 — Cancel/Void
+## US-FINANCE-004 — Cancel Only
 
 ### AC-US-FINANCE-004-A
 
 **Given** an eligible unpaid invoice exists
-**When** an authorized protected cancel/void succeeds  
+**When** an authorized protected Cancel succeeds<br>
 **Then** the original invoice remains historically traceable  
 **And** it is not treated as a normal active-revenue invoice.
 
 ### AC-US-FINANCE-004-B — Optional Reason
 
-**Given** an authorized Manager/Owner is completing the protected Cancel/Void flow  
+**Given** an authorized Manager/Owner is completing the protected Cancel flow<br>
 **When** no reason is entered  
-**Then** the cancellation/void may still succeed if every other rule is valid  
+**Then** cancellation may still succeed if every other rule is valid<br>
 **And** the invoice remains historically traceable.
 
 ### AC-US-FINANCE-004-C — Reason Preserved When Supplied
 
-**Given** an authorized Cancel/Void flow  
+**Given** an authorized Cancel flow<br>
 **When** the user enters an optional reason  
 **Then** the reason is preserved in the relevant history/audit context.
 
@@ -885,6 +899,12 @@ Acceptance table:
 **Given** an eligible unpaid Invoice
 **When** an authorized protected Cancel succeeds
 **Then** the Invoice remains historical and is excluded from active revenue; the optional reason rule still applies.
+
+### AC-US-FINANCE-004-F — No Void State or Cash Reversal
+
+**Given** an eligible unpaid Invoice is cancelled<br>
+**Then** its cancellation actor/time and optional reason remain historical<br>
+**And** no distinct Void state/action or automatic Cash refund/reversal is created.
 
 ---
 
@@ -930,6 +950,36 @@ Acceptance table:
 **Given** a session was transferred from Cashier A to Cashier B during shift close  
 **When** the session continues after the transfer  
 **Then** the remaining operational/session responsibility is attributed to Cashier B while the original `OpenedBy` history remains Cashier A.
+
+---
+
+# 11A. Business Day Acceptance Criteria
+
+## US-DAY-001 — Explicit Start and End
+
+### AC-US-DAY-001-A — Start Once
+
+**Given** Branch A has no open BusinessDay and the actor is authorized for Start Day<br>
+**When** Start Day succeeds<br>
+**Then** an open day records Branch A, start actor and UTC start time<br>
+**And** a concurrent or later second Start Day for Branch A is rejected until the first day is ended.
+
+### AC-US-DAY-001-B — End Explicitly
+
+**Given** an open BusinessDay and an actor authorized for End Day<br>
+**When** End Day succeeds<br>
+**Then** end actor and UTC end time are recorded together, with end not before start<br>
+**And** the day is no longer open.
+
+### AC-US-DAY-001-C — No Automatic End
+
+**Given** a BusinessDay is open<br>
+**When** calendar midnight passes or the application restarts after a crash<br>
+**Then** that same day remains open and can be recovered; no new day is silently started.
+
+### AC-US-DAY-001-D — Authorization Not Inferred
+
+Start Day/End Day permissions and whether active Sessions block End Day require separate workflow approval; Shift permissions and Shift close rules do not silently decide either question.
 
 ---
 
@@ -993,7 +1043,7 @@ Acceptance table:
 ### AC-US-REPORT-001-A
 
 **Given** valid financial activity exists in a date period  
-**When** an authorized user selects Daily, Weekly, Monthly, or Yearly reporting  
+**When** an authorized user selects one BusinessDay, a calendar Month, a selected six-calendar-month range, or a calendar Year<br>
 **Then** the product can provide the corresponding period view.
 
 ### AC-US-REPORT-001-B
@@ -1006,6 +1056,20 @@ Acceptance table:
 **Given** a user is authorized only for Branch A  
 **When** the user views branch reports  
 **Then** unauthorized Branch B data is not included.
+
+### AC-US-REPORT-001-D — Receipt Day and Expense Day
+
+**Given** an Invoice is issued on BusinessDay A and its successful full Cash Payment is recorded on BusinessDay B<br>
+**And** an Expense is recorded on BusinessDay B<br>
+**When** the daily reports for A and B are viewed<br>
+**Then** that Payment contributes Revenue only to B and that Expense contributes Expenses only to B<br>
+**And** an unpaid or cancelled Invoice contributes no Cash Revenue.
+
+### AC-US-REPORT-001-E — Calendar Labels
+
+**Given** the Branch timezone is Africa/Cairo by R1 default<br>
+**When** Month, selected six-calendar-month or Year periods are selected<br>
+**Then** the BusinessDays are grouped by the corresponding Branch-local calendar labels while stored instants remain UTC.
 
 ---
 
@@ -1306,7 +1370,7 @@ PIN Reset
 Pricing Change
 User/Permission Change
 Expense Creation
-Invoice Cancel/Void
+Invoice Cancel
 Session Responsibility Transfer
 Subscription State Change
 Important Sync Rejection/Conflict

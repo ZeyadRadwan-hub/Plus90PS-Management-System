@@ -60,6 +60,7 @@ BR-MONEY-*     Money rounding
 BR-INVOICE-*   Invoices
 BR-PAY-*       Payments
 BR-SHIFT-*     Shifts
+BR-DAY-*       Business Days
 BR-EXP-*       Expenses
 BR-ASSET-*     Assets/equipment
 BR-REPORT-*    Reports
@@ -523,26 +524,26 @@ Retry/synchronization must not create duplicate invoices for the same accepted o
 ## BR-INVOICE-004 — Free Destructive Delete Is Prohibited
 Operational users must not freely erase financial invoice history.
 
-## BR-INVOICE-005 — Protected Cancel/Void
-Cancellation/void of an eligible unpaid Invoice is a protected operation requiring appropriate authorization. A successfully paid Invoice cannot be cancelled (BR-INVOICE-011).
+## BR-INVOICE-005 — Protected Cancel Only
+Cancel of an eligible unpaid Invoice is a protected operation requiring appropriate authorization. R1 has no separate Void action or state. A successfully paid Invoice cannot be cancelled (BR-INVOICE-011).
 
-## BR-INVOICE-006 — Cancelled/Void Record Remains Historical
-A cancelled/void invoice remains traceable in history.
+## BR-INVOICE-006 — Cancelled Record Remains Historical
+A cancelled invoice remains traceable in history.
 
-## BR-INVOICE-007 — Cancelled/Void Revenue Treatment
-A cancelled/void invoice must not silently count as valid active revenue.
+## BR-INVOICE-007 — Cancelled Revenue Treatment
+A cancelled invoice is excluded from active revenue. Cash revenue is recognized from a successful Payment, not from Invoice issuance.
 
 ## BR-INVOICE-008 — Financial Completion Must Be Persisted Before Success
 The UI must not report a successful invoice/payment completion before required local financial persistence succeeds.
 
 ## BR-INVOICE-009 — Cancellation Reason Is Optional
-The protected Cancel/Void flow may include a reason field, but entering a reason is optional. A valid authorized cancellation must be able to proceed without a reason. If a reason is entered, it is preserved with the cancellation/audit context.
+The protected Cancel flow may include a reason field, but entering a reason is optional. A valid authorized cancellation must be able to proceed without a reason. If a reason is entered, it is preserved with the cancellation/audit context.
 
 ## BR-INVOICE-010 — Invoice May Precede Payment
 An invoice may be issued before cash payment. Payment is a separate business step; issuing an invoice does not require immediate cash receipt.
 
 ## BR-INVOICE-011 — Paid Invoice Cannot Be Cancelled
-Once an Invoice has a successful recorded Payment, Cancel must be rejected. Protected Cancel applies only to an eligible unpaid Invoice; an unpaid cancelled Invoice remains historical and is excluded from active revenue. Cancel does not automatically refund or reverse cash, and neither paid nor cancelled invoices are destructively deleted. The distinction between Cancel and Void for unpaid states remains to be finalized.
+Once an Invoice has a successful recorded Payment, Cancel must be rejected. Protected Cancel applies only to an eligible unpaid Invoice; an unpaid cancelled Invoice remains historical and is excluded from active revenue. Cancel does not automatically refund or reverse cash, and neither paid nor cancelled invoices are destructively deleted.
 
 ## BR-INVOICE-012 — Total Paused Duration on Invoice
 If an Open or Fixed Session has one or more Pause intervals, its customer-facing Invoice shows the total free/non-billable paused duration. Individual intervals may remain in history/audit but are not listed on the customer Invoice by default.
@@ -565,6 +566,12 @@ Retrying synchronization must not record the same cash payment twice.
 
 ## BR-PAY-005 — Financial Atomicity
 Where Session Completion + Invoice + Pending Sync are one business completion, the local process should treat the required records as one controlled commit boundary. If cash is collected in that same operation, include Payment in its required commit boundary. An invoice may also be issued before Payment; neither path may show success before its own required local records persist.
+
+## BR-PAY-006 — One Full Cash Payment
+An Invoice may have zero or one successful Cash Payment. The Payment amount is strictly positive and equals that Invoice's final amount; partial payments and installments are not supported in R1. Payment acceptance and invoice eligibility are checked in one controlled transaction.
+
+## BR-PAY-007 — Payment Business Day
+The Payment belongs to the explicitly open BusinessDay when Cash is received; this may differ from the Invoice's issuance BusinessDay.
 
 ---
 
@@ -590,6 +597,19 @@ A shift/session handover preserves the original `OpenedBy` employee for history 
 
 ## BR-SHIFT-007 — Responsibility After Handover
 From the handover time forward, the active session is operationally the responsibility of the receiving Cashier and is attributed to that receiving Cashier for the remaining shift/session responsibility. The transfer itself must be auditable.
+
+---
+
+# 20A. Business Day Rules
+
+## BR-DAY-001 — Explicit Business Day Lifecycle
+An authorized Start Day opens a Branch BusinessDay, and an explicit End Day closes it. Calendar midnight and restart never close it automatically; a still-open day is recovered after a crash or restart.
+
+## BR-DAY-002 — One Open Day and Valid End
+At most one BusinessDay may be open for a Branch. The closing actor and end timestamp are either both recorded or both absent, and the end instant is not before the start instant. Do not infer Start Day/End Day permissions from Shift permissions; the authorization matrix requires its own approval.
+
+## BR-DAY-003 — Operational Attribution
+Sessions, Invoices, Payments and Expenses record their respective BusinessDay. Invoice issuance and later Cash receipt may belong to different BusinessDays. Whether active Sessions block End Day is not decided here.
 
 ---
 
@@ -634,10 +654,10 @@ An authorized Manager/Owner can view and maintain the approved branch-scoped qua
 # 23. Reporting Rules
 
 ## BR-REPORT-001 — Daily Reports
-Release 1 supports daily reporting.
+Release 1 daily reporting selects one explicit BusinessDay, not a midnight-to-midnight interval.
 
-## BR-REPORT-002 — Weekly Reports
-Release 1 supports weekly reporting.
+## BR-REPORT-002 — Selected Six-Month Reports
+Release 1 supports a selected six-calendar-month reporting range, not a Weekly report.
 
 ## BR-REPORT-003 — Monthly Reports
 Release 1 supports monthly reporting.
@@ -648,8 +668,8 @@ Release 1 supports yearly reporting.
 ## BR-REPORT-005 — Core Financial Views
 Release 1 provides Revenue, Expenses, and Profit operational views.
 
-## BR-REPORT-006 — Revenue Comes from Valid Financial Operations
-Revenue is derived from valid financial/payment records as operations occur. It is not created only at month-end.
+## BR-REPORT-006 — Revenue Comes from Successful Cash Payments
+Revenue is derived from successful Cash Payments by Payment.BusinessDayId. Expenses are attributed by Expense.BusinessDayId. Invoice issuance alone is not revenue; an Invoice's issuance day may differ from its Payment day. It is not created only at month-end.
 
 ## BR-REPORT-007 — Optional Monthly Review
 The Owner may use an optional month-end review function. This does not replace normal continuous recording of revenue and expenses.
@@ -659,6 +679,9 @@ The monthly review is a reporting/review action only. It does not lock the accou
 
 ## BR-REPORT-009 — Reports Respect Scope
 Reports must respect authorized branch/ownership scope.
+
+## BR-REPORT-010 — Calendar Period Labels
+Monthly, selected six-calendar-month and Yearly views select BusinessDays using the Branch reporting timezone (R1 default Africa/Cairo). That timezone is for display and calendar-period selection; stored instants remain UTC. No stored report totals are required.
 
 
 ---
@@ -774,7 +797,7 @@ Changing the Windows clock backward must not be allowed to extend offline subscr
 Sensitive actions should create audit evidence.
 
 ## BR-AUDIT-002 — Candidate Sensitive Events
-Audit coverage includes relevant events such as repeated login failure, security lock/unlock, PIN reset, pricing change, permission/user change, expense creation, protected invoice cancel/void, authorized session responsibility transfer, subscription state change, and important sync conflict/rejection.
+Audit coverage includes relevant events such as repeated login failure, security lock/unlock, PIN reset, pricing change, permission/user change, expense creation, protected invoice Cancel, authorized session responsibility transfer, subscription state change, and important sync conflict/rejection.
 
 ## BR-AUDIT-003 — Audit Identity
 Audit records should preserve Actor, Branch, Action, Timestamp, Affected Record, Reason where required, Before/After where appropriate, and Operation Identifier.
@@ -854,7 +877,7 @@ The following business decisions are now closed for Release 1 UX and requirement
 Shift close with active sessions
 → Transfer active session responsibility to another Cashier before closing the shift.
 
-Invoice Cancel/Void reason
+Invoice Cancel reason
 → Reason field is optional; authorization and non-destructive history remain required.
 
 Basic Asset scope
@@ -901,7 +924,7 @@ Remaining later **design detail**, not an unresolved business permission decisio
 23. Release 1 does not silently absorb Release 2 customer/booking scope.
 24. Discounts are currently deferred from R1.
 25. A shift with active assigned sessions is not closed until those sessions are handed to another authorized Cashier.
-26. Invoice Cancel/Void reason is optional, not mandatory.
+26. Invoice Cancel reason is optional, not mandatory.
 27. Monthly review is read-only and does not create a financial closing state.
 28. Offline mode never elevates a user beyond normal role/permission boundaries.
 ```
