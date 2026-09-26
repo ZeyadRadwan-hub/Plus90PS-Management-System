@@ -1,6 +1,6 @@
 # +90 PS R1 — PRE-CODE GATE
 
-**CURRENT STATE: HOLD for other business implementation.** BE-00 through BE-08 are the explicitly approved narrow slices listed below; REPO-01 is implemented. BE-06 records the approved [R1 technical baseline](../Governance/TECHNICAL_DECISIONS_R1.md); BE-07 adds only pure Domain Session aggregate core. BE-08 adds only pure Domain Business, Branch.BusinessId, Employee/EmployeeRole, and active same-Business scope; Q-ORG-01 is resolved. Device replacement/reprovisioning and query-driven B-Tree/B+Tree indexing are approved **documentation only**. A documented technical decision is **not** implemented Database/Auth/Sync code or a globally approved physical schema. No PIN/authentication, RBAC permission enforcement, role changes, Employee management API, Device implementation, ConsoleOccupancy, persistence/indexes, responsibility transfer, hourly charge formula, pricing management, invoice/payment workflow, sync, or frontend work is unlocked.
+**CURRENT STATE: HOLD for other business implementation.** BE-00 through BE-08 are the explicitly approved narrow slices listed below; REPO-01 is implemented. BE-06 records the approved [R1 technical baseline](../Governance/TECHNICAL_DECISIONS_R1.md); BE-07 adds only pure Domain Session aggregate core. BE-08 adds only pure Domain Business, Branch.BusinessId, Employee/EmployeeRole, and active same-Business scope; Q-ORG-01 is resolved. DB-01 now documents a physical schema and query-driven B-Tree/B+Tree candidates **for review only**. A documented design is **not** implemented Database/Auth/Sync code or a globally approved physical schema. No PIN/authentication, RBAC permission enforcement, role changes, Employee management API, Device implementation, ConsoleOccupancy, persistence/indexes, responsibility transfer, hourly charge formula, pricing management, invoice/payment workflow, sync, or frontend work is unlocked.
 
 | Scope | Authorization |
 |---|---|
@@ -16,6 +16,8 @@
 | R1 technical architecture baseline | APPROVED / DOCUMENTED — future design direction, **not** Database/Auth/Sync implementation |
 | Device replacement/reprovisioning and query-driven B-Tree/B+Tree indexing policy | APPROVED / DOCUMENTED — future design only; no Device or database index code |
 | REPO-01 Repository & Documentation Reconciliation | IMPLEMENTED — documentation/repository status only; no business code |
+| DB-01 R1 Physical Database Design + Query-Driven B-Tree Index Plan | DESIGN COMPLETED / READY FOR REVIEW — IMPLEMENTATION NOT STARTED |
+| BE-09 Database implementation slice | NOT AUTHORIZED YET |
 | Database implementation | NOT AUTHORIZED YET |
 | EF Core persistence | NOT AUTHORIZED YET |
 | Authentication | NOT AUTHORIZED YET |
@@ -30,8 +32,8 @@
 
 ## Historical design-pack outputs (not all tracked here)
 
-- The older pack manifest names Database/Data Dictionary, Architecture/System Analysis, API contract, Security, Offline Sync, Testing, Deployment, and UI Override drafts. Those eleven named files are **not tracked in this worktree**; do not infer their contents from the manifest.
-- Available requirements and planning documents discuss local-first architecture, Code First direction, and candidate data/API/security/sync design, but none constitutes an approved physical schema or deployed contract.
+- The older pack manifest named eleven design files. DB-01 now authors current Database Design and Data Dictionary documents (not recovered historical copies), plus a new Index Query Plan. The other nine named historical files are **not tracked in this worktree**; do not infer their contents from the manifest.
+- Available requirements and planning documents discuss local-first architecture and Code First. The new DB-01 physical design is for review, not yet a signed-off EF/provider implementation or deployed contract.
 - QA/UAT plan and deployment/backup/DR targets (NOT test results or live backups).
 - Approved intended WPF corrections (old screenshots NOT modified) and targeted diagram reconciliation plan. This worktree tracks rendered PNG diagrams only; editable `.drawio`/PlantUML sources are not present here.
 - Document reconciliation plan, decision requests, Codex handoff files.
@@ -41,7 +43,7 @@
 | Gate check | Status now | Evidence required to change to Done |
 |---|---|---|
 | User approves true product decisions relevant to later slices | PARTIAL | Pause eligibility and paid-invoice prohibition resolved in BE-06; Q-ORG-01 ownership/staffing resolved in BE-08; partial Payment, unpaid Cancel/Void, reporting boundary, and hosting remain open where relevant |
-| Database dictionary: exact fields/types/FK/NULL/unique, local-central mapping, provider-specific plan | DRAFT | Signed-off dictionary & schema design; SQLite/SQL Server differences tested later |
+| Database dictionary: exact fields/types/FK/NULL/unique, local-central mapping, provider-specific plan | DB-01 DESIGNED / READY FOR REVIEW | Owner/engineering sign-off of the new dictionary & schema; resolve affected Q-BIZ-01/02 and Q-REPORT-01; SQLite/SQL Server mappings and plans tested later |
 | Session/financial state and cash cancellation are consistent | PARTIAL | Paid Invoice cannot be cancelled; future full workflow must define partial Payment and eligible unpaid Cancel/Void states and test them |
 | API endpoint/DTO/error/retry/OpenAPI contract reviewed | DRAFT | Complete versioned contract with matching auth and state schemas |
 | PIN/device/lease/recovery and branch ownership security reviewed | BASELINE APPROVED / IMPLEMENTATION NOT STARTED | Technical baseline recorded; concrete threat review, ownership grants, provisioning, keys, and adversarial tests remain |
@@ -50,7 +52,7 @@
 | Diagrams consistent with approved design and readable | PARTIAL | Editable sources are not tracked in this worktree; obtain/inspect real sources before claiming source/export reconciliation |
 | Duplicate/legacy documents reconciled in actual repo | REPO-01 PARTIAL | Current-vs-historical status and identified contradictions reconciled; missing design-pack files and old historical links still require source recovery/review |
 | Real Git repository inventory incl. any existing code/migrations/data | BE-00 INVENTORY DONE | Clean `codex/r1-backend` worktree before BE-00; no existing .NET projects, database code, migrations, or data found in this worktree |
-| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-08 narrow slices approved as listed above | Direct narrow task authorizations; BE-09, DB-01, and later remain on HOLD |
+| Zeyad explicitly authorizes Codex coding slices | BE-00 through BE-08 narrow slices approved as listed above; DB-01 documentation-only design authorized/completed | Direct narrow task authorization still required for BE-09 and later implementation; wider gate remains HOLD |
 
 ## Safe next order
 
