@@ -56,7 +56,7 @@ Core responsibilities:
 - Manage basic branch assets/equipment quantities.
 - View branch reports.
 - Authorize protected branch actions.
-- Cancel/Void invoices through a protected flow.
+- Cancel invoices through a protected flow.
 - Approve/perform session responsibility transfer.
 
 ### Owner
@@ -100,15 +100,17 @@ Owner access must still respect branch/ownership isolation.
 | Create invoice from valid completion | ✅ | — | — | Part of Cashier completion flow |
 | Record cash payment | ✅ | — | — | R1 payment method = Cash |
 | View session history | ✅ | ✅ | ✅ | Scope follows branch/ownership authorization |
-| View cancelled/void-related history | ✅ | ✅ | ✅ | Historical records are not deleted |
+| View cancelled history | ✅ | ✅ | ✅ | Historical records are not deleted |
 | View invoices | ✅ | ✅ | ✅ | Scope follows authorization |
-| Cancel/Void invoice | ❌ | 🔐 | 🔐 | Reason is optional |
+| Cancel eligible unpaid invoice | ❌ | 🔐 | 🔐 | Optional reason; paid invoice cannot Cancel; no Void/refund |
 | Physically delete financial invoice history | ❌ | ❌ | ❌ | Non-destructive financial history |
 | Request session transfer/handover | ✅ | ✅ | ✅ | Approval/perform step is protected |
 | Approve/perform session responsibility transfer | ❌ | 🔐 | 🔐 | Preserve original opener |
 | View own current shift | ✅ | ✅ | ✅ | Cashier limited to own operational shift view |
 | Start shift for employee | ❌ | ✅ | ✅ | Manager/Owner selects employee |
 | End shift for employee | ❌ | ✅ | ✅ | Active sessions must be handed over first |
+| Start BusinessDay | ❌ | ✅ | TBD | Manager confirmed 2026-09-30; no automatic Owner inheritance |
+| End BusinessDay | ❌ | ✅ | TBD | No unfinished Active/Paused Session; explicit action |
 | View shift history / all employees | ❌ | ✅ | ✅ | Separate from Employee Management |
 | Add/Edit/Activate/Deactivate console | ❌ | ✅ | ✅ | Branch administration |
 | Change pricing | ❌ | ✅ | ✅ | Cashier must not change pricing |
@@ -149,17 +151,17 @@ Close Cashier A shift
 
 The remaining operational responsibility after the handover is attributed to the receiving Cashier.
 
-## 6. Invoice Cancel/Void
+## 6. Invoice Cancel
 
 ```text
-Cashier direct Cancel/Void          ❌
+Cashier direct Cancel          ❌
 Authorized Manager/Owner            ✅
 Reason field                        Optional
 Physical delete                     ❌
 Historical trace                    Required
 ```
 
-If a reason is entered, it is preserved with the cancellation/audit information. An empty reason does not by itself block an otherwise authorized Cancel/Void.
+If a reason is entered, it is preserved with the cancellation/audit information. An empty reason does not by itself block an otherwise authorized Cancel.
 
 ## 7. Offline Permission Rule
 
@@ -188,7 +190,7 @@ This table maps the current `+90PS_UI.zip` screen set to the intended R1 role bo
 | 07 | Session Transfer | ❌ | 🔐 | 🔐 | Protected approval/perform step |
 | 08 | Session End Invoice | ✅ | — | — | Cashier completion/payment flow |
 | 09 | Session Fixed Time Alert | ✅ | 👁 | 👁 | No automatic stop |
-| 10 | Session History | ✅ | ✅ | ✅ | Include cancelled/void-related history |
+| 10 | Session History | ✅ | ✅ | ✅ | Include cancelled history |
 | 11 | Invoices All | ✅ | ✅ | ✅ | Scope-limited |
 | 12 | Invoice Details | ✅ | ✅ | ✅ | Cancel action hidden from Cashier |
 | 13 | Invoice Cancel | ❌ | 🔐 | 🔐 | Optional reason |
@@ -223,8 +225,8 @@ The final UI must:
 
 - Never expose all management pages/actions merely because a Cashier is logged in.
 - Keep Management, Expenses, Pricing, Employees, Assets, Reports, protected Shift administration, and Roles/Permissions behind the correct role/permission.
-- Keep Invoice Cancel/Void protected.
-- Keep the Cancel/Void reason optional.
+- Keep Invoice Cancel protected.
+- Keep the Cancel reason optional.
 - Keep Screen 36 security policy outside normal editable Settings.
 - Keep normal Settings simple and user-facing.
 - Keep Arabic and English role behavior identical.
@@ -244,3 +246,7 @@ This RBAC baseline is aligned with the current R1 documentation set:
 - `TO_BE_PROCESS.md`
 - Current user-approved decisions
 - Current `+90PS_UI.zip` screen baseline
+
+## Current permission / implementation boundary — 2026-09-30
+
+Manager Start/End BusinessDay is an owner-confirmed requirement, separate from Shift permissions. Owner inheritance is unspecified, not an implied grant. Protected Cancel applies only to eligible unpaid Invoices; paid invoices cannot Cancel; R1 has no Void or automatic refund/reversal. Employee belongs to Business and is deactivated Business-wide; branch scope must be checked separately. Sensitive role/PIN/pricing administration is online-only under TECHNICAL_DECISIONS_R1.md. This matrix is requirements, not implemented PIN/RBAC enforcement.

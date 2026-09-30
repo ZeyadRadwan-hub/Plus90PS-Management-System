@@ -17,3 +17,7 @@
 | `Project.Docs/Releases/R2/`, `R3/` | future release scopes | ensure R2 customers/bookings/deposits etc and R3 advanced remain future, no accidental R1 transposition | R1/R2/R3 separation |
 
 **No source tree was modified by creating this pack.** A canonical-source index must record the exact paths in Zeyad's repo; do not blindly replace a document just because its name matches. Save superseded content under `Archive/` after comparison; do not delete until reviewed. If a financial/security decision remains open, mark dependent files/sections blocked rather than silently writing a policy.
+
+## Reconciliation actually applied — 2026-09-30
+
+The older table above records a historical patch plan, including old decisions and references to absent files. Current governance, README, BRD/PRD, BR/FR/AC/RBAC, physical DB design, dictionary and query plan have now been reconciled in this extracted copy. The exact OLD / CURRENT / SOURCE register is DOCUMENT_RECONCILIATION_2026-09-30.md. The original supplied ZIP and original text snapshots in Info.md remain historical evidence. No production code, migration, database, physical index or gate authorization changed.

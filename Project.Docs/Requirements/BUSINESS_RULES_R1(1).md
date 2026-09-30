@@ -603,13 +603,16 @@ From the handover time forward, the active session is operationally the responsi
 # 20A. Business Day Rules
 
 ## BR-DAY-001 — Explicit Business Day Lifecycle
-An authorized Start Day opens a Branch BusinessDay, and an explicit End Day closes it. Calendar midnight and restart never close it automatically; a still-open day is recovered after a crash or restart.
+An authorized Manager Start Day opens a Branch BusinessDay, and an explicit authorized Manager End Day closes it (owner confirmation 2026-09-30). Calendar midnight and restart never close it automatically; a still-open day is recovered after a crash or restart.
 
 ## BR-DAY-002 — One Open Day and Valid End
-At most one BusinessDay may be open for a Branch. The closing actor and end timestamp are either both recorded or both absent, and the end instant is not before the start instant. Do not infer Start Day/End Day permissions from Shift permissions; the authorization matrix requires its own approval.
+At most one BusinessDay may be open for a Branch. The closing actor and end timestamp are either both recorded or both absent, and the end instant is not before the start instant. Manager Start Day/End Day is confirmed independently of Shift permissions; do not silently infer Owner inheritance. End Day is blocked while any Session is unfinished, including Paused; no automatic completion/handover bypasses the guard.
 
 ## BR-DAY-003 — Operational Attribution
-Sessions, Invoices, Payments and Expenses record their respective BusinessDay. Invoice issuance and later Cash receipt may belong to different BusinessDays. Whether active Sessions block End Day is not decided here.
+Sessions, Invoices, Payments and Expenses record their respective BusinessDay. Invoice issuance and later Cash receipt may belong to different BusinessDays. The approved unfinished-Session End Day guard is defined in BR-DAY-002.
+
+## BR-DAY-004 — Shared Explicit Transition Boundary
+At an explicit transition from a finished BusinessDay to the next, previous EndedAtUtc equals next StartedAtUtc, using one shared instant. This does not create automatic midnight closure/opening or an implicit new day after a standalone End Day. The later transaction contract must preserve one open day, ordering and no double attribution at the boundary.
 
 ---
 
@@ -681,7 +684,7 @@ The monthly review is a reporting/review action only. It does not lock the accou
 Reports must respect authorized branch/ownership scope.
 
 ## BR-REPORT-010 — Calendar Period Labels
-Monthly, selected six-calendar-month and Yearly views select BusinessDays using the Branch reporting timezone (R1 default Africa/Cairo). That timezone is for display and calendar-period selection; stored instants remain UTC. No stored report totals are required.
+Monthly, selected six-calendar-month and Yearly views select BusinessDays using the Branch reporting timezone (R1 default Africa/Cairo). The full BusinessDay belongs to its start date/month/year in that timezone, even if it ends in a later month/year. Select day IDs by StartedAtUtc; never split their financial rows at midnight. Stored instants remain UTC. No stored report totals are required.
 
 
 ---
@@ -994,7 +997,7 @@ docs/
 
 # 34. Historical Pre-Code Status (as written 2026-09-09)
 
-> This section is preserved as a historical planning snapshot. It does not describe the current repository: BE-00 through BE-04 now contain tested backend foundation and Domain code. See [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md) for current implementation status; the wider R1 gate remains HOLD.
+> This section is preserved as a historical planning snapshot. It does not describe the current repository: BE-00 through BE-08 now contain tested backend foundation and Domain code. See [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md) for current implementation status; the wider R1 gate remains HOLD.
 
 ```text
 AS-IS                              ✅

@@ -66,3 +66,7 @@
 - C048: [RELEASE_3.md](R3_FULL_PRODUCT.md) — # 231. Final End-to-End Product Flow: Align final flow with local-first and optional customer context.
 
 السجل التفصيلي الآلي [changes.json](changes.json) يحفظ النص الكامل السابق والجديد لكل قسم. [original_sources.zip](original_sources.zip) يحفظ الملفات الثمانية الأصلية بأسمائها وبصماتها في manifest.json. الإضافات الجديدة مثل خريطة القبول لم يكن لها ملف مقابل سابق.
+
+## 2026-09-30 — Current documentation reconciliation
+
+Updated README/PROJECT_CONTEXT from stale BE-04/BE-06 state to BE-08; kept DB-01.1 completed / ready for review / not implemented. Reconciled Cancel-only, zero/one full Cash Payment, current report periods and actual UI inventory. Recorded owner-confirmed Manager BusinessDay actions, no End Day with unfinished Sessions, full day in its start month/year and shared explicit next-day boundary. Preserved old history and exact old/current snippets in ../Reviews/DOCUMENT_RECONCILIATION_2026-09-30.md. Latest reported/static count remains 206; no fresh test execution, production-code changes or gate lift.

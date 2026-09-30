@@ -284,7 +284,7 @@ Cash Payments
 Basic Shifts
 Expenses
 Basic Asset/Equipment Quantity Tracking where retained
-Daily / Weekly / Monthly / Yearly Reporting
+Daily / Monthly / Selected Six-Month / Yearly Reporting
 Revenue / Expenses / Profit
 Offline Core Operation
 Synchronization
@@ -615,7 +615,7 @@ Release 1 records cash payments.
 
 Payment must be associated with the relevant invoice/financial operation.
 
-An invoice may be issued before Payment; cash receipt is a separate business step. Release 1 supports Cash only. Once an Invoice has a successful recorded Payment, Cancel is prohibited; protected Cancel applies only to eligible unpaid Invoices. No automatic refund/reversal follows from Cancel. The distinction between Cancel and Void for unpaid states remains open.
+An invoice may be issued before Payment; cash receipt is a separate business step. Release 1 supports Cash only. Once an Invoice has a successful recorded Payment, Cancel is prohibited; protected Cancel applies only to eligible unpaid Invoices. No automatic refund/reversal follows from Cancel. R1 has one Cancel action for eligible unpaid Invoices, no separate Void action/state. Each Invoice has zero or one positive full Cash Payment equal to its final amount, never partial/installments.
 
 ## BRQ-FIN-004
 
@@ -631,11 +631,11 @@ Financial records must not be freely destructively deleted.
 
 ## BRQ-FIN-007
 
-Protected cancellation/void requires authorization and remains traceable.
+Protected Cancel of an eligible unpaid Invoice requires Manager/Owner authorization and remains traceable; a paid Invoice cannot Cancel.
 
 ## BRQ-FIN-008
 
-A Cancel/Void reason field is optional. An authorized cancellation must not be blocked only because no reason was entered; if a reason is supplied, it is preserved in the audit/history context.
+A Cancel reason field is optional. An authorized cancellation must not be blocked only because no reason was entered; if a reason is supplied, it is preserved in the audit/history context.
 
 ---
 
@@ -711,7 +711,7 @@ Release 1 must support Daily reporting.
 
 ## BRQ-REPORT-002
 
-Release 1 must support Weekly reporting.
+Release 1 must support a selected six-calendar-month reporting range; Weekly is not an R1 report.
 
 ## BRQ-REPORT-003
 
@@ -961,7 +961,7 @@ This is not the ERD. Exact entities, fields, relationships, indexes, keys, and s
 
 ## BC-001 — Historical Code Baseline
 
-At this document's original pre-code date, Release 1 implementation had not started. This is historical status, not the current repository state: BE-00 through BE-04 now contain tested foundation and Domain code. See [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md); the full Release 1 product is not implemented.
+At this document's original pre-code date, Release 1 implementation had not started. This is historical status, not the current repository state: BE-00 through BE-08 now contain tested foundation and Domain code. See [CURRENT_STATE.md](../Reviews/CURRENT_STATE.md); the full Release 1 product is not implemented.
 
 ## BC-002 — Desktop-First R1
 
@@ -1175,7 +1175,7 @@ The previously open R1 business items needed before UX are now resolved:
 OBD-001 Shift Close with Active Sessions
 → Transfer active sessions to another authorized Cashier before closing the shift.
 
-OBD-002 Cancel/Void Reason
+OBD-002 Cancel Reason
 → Reason is optional. Protected authorization and historical traceability remain mandatory.
 
 OBD-003 Basic Asset Scope
@@ -1295,3 +1295,7 @@ System Analysis
 ```
 
 No code or runtime implementation is claimed by this document.
+
+## BusinessDay / reporting clarification — 2026-09-30
+
+Manager is confirmed for explicit Start Day / End Day; no Owner inheritance is inferred. End Day must be blocked with unfinished Active/Paused Sessions. Daily = one explicit BusinessDay; Monthly, selected six calendar months and Yearly select the entire day by its Branch-local start date/month/year (R1 Africa/Cairo), even if it starts five minutes before a new month and ends in the next. Revenue = successful Payments by receipt BusinessDay; Expenses = recording BusinessDay; operational Profit = Revenue − Expenses. At an explicit next-day transition, previous EndedAtUtc equals next StartedAtUtc. Midnight/restart never close or create a day automatically. These requirements supersede older report/cancellation wording and are not implementation evidence. See DECISION_REQUESTS_R1.md, current BR/FR/AC and CURRENT_STATE.md.

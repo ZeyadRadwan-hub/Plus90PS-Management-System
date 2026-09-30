@@ -502,13 +502,16 @@ The remaining operational/session responsibility after the handover shall be att
 # 20A. Business Day
 
 ## FR-DAY-001
-An authorized Start Day action shall create an open BusinessDay for the current Branch and capture its starting actor and UTC time. A second simultaneous open day for that Branch shall be rejected.
+An authorized Manager Start Day action shall create an open BusinessDay for the current Branch and capture its starting actor and UTC time. A second simultaneous open day for that Branch shall be rejected.
 
 ## FR-DAY-002
-An explicit authorized End Day action shall capture ending actor and UTC time, not earlier than Start. Calendar midnight and application restart shall not close a BusinessDay automatically; an open day shall remain recoverable after restart.
+An explicit authorized Manager End Day action shall capture ending actor and UTC time, not earlier than Start. Calendar midnight and application restart shall not close a BusinessDay automatically; an open day shall remain recoverable after restart.
 
 ## FR-DAY-003
-Sessions, Invoices, Payments and Expenses shall be associated with the BusinessDay of their respective operation. An Invoice and its later Payment may have different BusinessDayIds. Start Day/End Day authorization and the effect of active Sessions on End Day need separate workflow approval; do not infer them from Shift rules.
+Sessions, Invoices, Payments and Expenses shall be associated with the BusinessDay of their respective operation. An Invoice and its later Payment may have different BusinessDayIds. Manager Start Day/End Day is confirmed; do not infer Owner inheritance. End Day shall be rejected while any Session is unfinished, including Paused, without automatically completing or handing over Sessions.
+
+## FR-DAY-004
+An explicit transition to the next BusinessDay shall use one shared UTC instant for old EndedAtUtc and new StartedAtUtc and preserve the one-open-day invariant. No automatic midnight/new-day action is implied; the later authorized workflow shall define atomic operation ordering.
 
 ---
 
@@ -591,7 +594,7 @@ The product may provide an optional Owner monthly review action.
 The monthly review shall be read-only with respect to financial state: it shall not lock a period or mutate invoice, payment, revenue, expense, or profit records merely because the review was opened/completed.
 
 ## FR-REPORT-012
-Monthly, selected six-calendar-month and Yearly reports shall select BusinessDays by Branch timezone calendar labels (R1 default Africa/Cairo), while stored instants remain UTC. The reports shall derive totals from Payment and Expense records rather than a materialized report table.
+Monthly, selected six-calendar-month and Yearly reports shall select each complete BusinessDay by the date/month/year of StartedAtUtc in the Branch reporting timezone (R1 Africa/Cairo), regardless of EndedAtUtc. A day beginning five minutes before a month/year boundary shall belong wholly to its starting period, without splitting its assigned receipts/expenses. Stored instants remain UTC. The reports shall derive totals from Payment and Expense records rather than a materialized report table.
 
 ---
 

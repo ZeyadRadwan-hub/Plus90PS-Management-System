@@ -43,7 +43,7 @@
 
 | Gate check | Status now | Evidence required to change to Done |
 |---|---|---|
-| User approves true product decisions relevant to later slices | PARTIAL | Q-BIZ-01/02 and Q-REPORT-01 resolved in DB-01.1; Start Day/End Day permission and active-Session End Day behavior need future workflow approval; Q-OPS-01 hosting remains open for rollout |
+| User approves true product decisions relevant to later slices | PARTIAL | Q-BIZ-01/02 and Q-REPORT-01 resolved; 2026-09-30 owner clarification confirms Manager day actions, no End Day with unfinished Sessions, whole-day start-month/year attribution and a shared explicit-transition boundary. Workflow contracts remain to implement/review; Q-OPS-01 hosting remains open for rollout |
 | Database dictionary: exact fields/types/FK/NULL/unique, local-central mapping, provider-specific plan | DB-01.1 DESIGNED / READY FOR REVIEW | Owner/engineering sign-off of revised dictionary & schema; SQLite/SQL Server mappings and plans tested later; no DbContext/migration exists |
 | Session/financial state and cash cancellation are consistent | DECISIONS RECORDED / IMPLEMENTATION NOT STARTED | One full Cash Payment per Invoice, protected eligible unpaid Cancel only, paid Cancel rejected; future workflow/API tests and transaction proof required |
 | API endpoint/DTO/error/retry/OpenAPI contract reviewed | DRAFT | Complete versioned contract with matching auth and state schemas |

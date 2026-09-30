@@ -137,12 +137,12 @@ No Minimum Charge
 
 Invoices
 Cash Payments
-Protected Cancel/Void Direction
+Protected Cancel Direction
 
 Shifts
 Expenses
 Basic Asset/Equipment Quantity Foundation
-Daily / Weekly / Monthly / Yearly Reports
+Daily / Monthly / Selected Six-Month / Yearly Reports
 
 Offline Operation
 Local Persistence
@@ -364,7 +364,7 @@ StartShift
 EndShift
 CreateExpense
 ResetEmployeePin
-CancelOrVoidInvoice
+CancelEligibleUnpaidInvoice
 TransferSessionResponsibility
 ViewSensitiveReports
 SecurityUnlock
@@ -662,22 +662,26 @@ Final Amount
       ↓
 Create Invoice
       ↓
-Record Payment
+Persist Invoice locally with required Audit/Outbox
       ↓
-Persist
+Show Invoice issued (unpaid unless a separate Payment commits)
       ↓
-Show Completed
+Record optional full Cash Payment now or later
+      ↓
+Persist Payment locally with required Audit/Outbox
+      ↓
+Show Paid only after Payment commit
 ```
 
 Rules:
 
 - Invoice belongs to branch.
 - Cashier cannot freely erase invoice history.
-- Protected cancel/void requires authorization.
-- Cancelled/void records remain traceable.
+- Protected Cancel requires Manager/Owner authorization and an eligible unpaid Invoice; a paid Invoice cannot Cancel. No Void or automatic refund/reversal exists in R1.
+- Cancelled records remain traceable and are not destructively deleted.
 - Retry must not duplicate invoices.
 
-The Cancel/Void reason field is optional. Protected authorization, non-destructive history, and exclusion from valid active revenue remain required. If a reason is entered, preserve it with the audit/history context.
+The Cancel reason field is optional. Protected authorization, non-destructive history, and exclusion from valid active revenue remain required. If a reason is entered, preserve it with the audit/history context.
 
 ---
 
@@ -687,7 +691,7 @@ The Cancel/Void reason field is optional. Protected authorization, non-destructi
 - Payment is persistent.
 - Sync retry must not duplicate payment.
 - The UI must not show payment success before required persistence succeeds.
-- Cash is the only Release 1 payment method. An invoice may be issued before cash is received; Payment is a separate step.
+- Cash is the only Release 1 payment method. An invoice may be issued before cash is received; Payment is a separate step. Each Invoice has zero or one full positive Cash Payment equal to its final amount; no partial/installments. Payment belongs to the BusinessDay in which cash is actually received, which may differ from Invoice issuance.
 
 ---
 
@@ -741,9 +745,9 @@ Advanced transfer and detailed per-unit damage lifecycle are not R1 requirements
 Required periods:
 
 ```text
-Daily
-Weekly
+Daily (one BusinessDay)
 Monthly
+Selected six calendar months
 Yearly
 ```
 
@@ -927,7 +931,7 @@ Business data remains preserved. Changing Windows time backward must not extend 
 
 # 33. PF-AUDIT — Audit
 
-Candidate events include repeated login failure, security lock/unlock, PIN reset, pricing change, user/permission change, expense creation, protected invoice cancel/void, session responsibility transfer, subscription state change, and important sync conflict/rejection.
+Candidate events include repeated login failure, security lock/unlock, PIN reset, pricing change, user/permission change, expense creation, protected eligible unpaid invoice Cancel, session responsibility transfer, subscription state change, and important sync conflict/rejection.
 
 Audit evidence should identify relevant actor, branch, action, timestamp, target, reason, and before/after context where appropriate.
 
@@ -1083,7 +1087,7 @@ The product questions that previously blocked UX are closed:
 Shift with active sessions
 → handover to another Cashier before shift close.
 
-Cancel/Void reason
+Cancel reason
 → optional field.
 
 Basic Assets
@@ -1096,7 +1100,7 @@ Offline role behavior
 → no role elevation offline.
 ```
 
-Remaining later design detail: Security/RBAC will define which protected actions require live central verification in `RestrictedOffline`.
+The approved TECHNICAL_DECISIONS_R1.md baseline already makes sensitive role/PIN/pricing administration online-only; offline does not elevate roles. Concrete RBAC/API/RestrictedOffline contracts, enforcement and security tests remain unimplemented.
 
 ---
 
@@ -1214,3 +1218,7 @@ System Analysis
 ```
 
 No implementation is claimed by this PRD.
+
+## BusinessDay / reporting clarification — 2026-09-30
+
+Manager is confirmed for explicit Start Day / End Day; no Owner inheritance is inferred. End Day must be blocked with unfinished Active/Paused Sessions. Daily = one explicit BusinessDay; Monthly, selected six calendar months and Yearly select the entire day by its Branch-local start date/month/year (R1 Africa/Cairo), even if it starts five minutes before a new month and ends in the next. Revenue = successful Payments by receipt BusinessDay; Expenses = recording BusinessDay; operational Profit = Revenue − Expenses. At an explicit next-day transition, previous EndedAtUtc equals next StartedAtUtc. Midnight/restart never close or create a day automatically. These requirements supersede older report/cancellation wording and are not implementation evidence. See DECISION_REQUESTS_R1.md, current BR/FR/AC and CURRENT_STATE.md.

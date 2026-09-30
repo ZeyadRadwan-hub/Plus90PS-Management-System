@@ -977,9 +977,27 @@ Acceptance table:
 **When** calendar midnight passes or the application restarts after a crash<br>
 **Then** that same day remains open and can be recovered; no new day is silently started.
 
-### AC-US-DAY-001-D — Authorization Not Inferred
+### AC-US-DAY-001-D — Manager Day Actions
 
-Start Day/End Day permissions and whether active Sessions block End Day require separate workflow approval; Shift permissions and Shift close rules do not silently decide either question.
+**Given** an active Manager in authorized Business/Branch scope<br>
+**When** an otherwise valid explicit Start Day or End Day is requested<br>
+**Then** Manager is the confirmed permitted role, subject to workflow validation<br>
+**And** Cashier permission or Owner inheritance is not silently inferred from Shift rules.
+
+### AC-US-DAY-001-E — Block End with Unfinished Sessions
+
+**Given** a Branch has an open BusinessDay and at least one unfinished Active or Paused Session<br>
+**When** End Day is requested<br>
+**Then** End Day is rejected and the same BusinessDay remains open<br>
+**And** no Session is silently completed, transferred or erased.
+
+### AC-US-DAY-001-F — Shared Explicit Transition Instant
+
+**Given** all Sessions are completed and an authorized explicit transition to the next day is requested<br>
+**When** that transition commits successfully<br>
+**Then** previous EndedAtUtc equals next StartedAtUtc, using one instant<br>
+**And** one open day remains, with no overlap or double attribution at the shared boundary<br>
+**And** midnight or restart alone never triggers the transition.
 
 ---
 
@@ -1069,7 +1087,21 @@ Start Day/End Day permissions and whether active Sessions block End Day require 
 
 **Given** the Branch timezone is Africa/Cairo by R1 default<br>
 **When** Month, selected six-calendar-month or Year periods are selected<br>
-**Then** the BusinessDays are grouped by the corresponding Branch-local calendar labels while stored instants remain UTC.
+**Then** each complete BusinessDay is selected by the Branch-local date/month/year of StartedAtUtc, regardless of its ending period; stored instants remain UTC.
+
+### AC-US-REPORT-001-F — Cross-Month Start Attribution
+
+**Given** a BusinessDay starts 30 September at 23:55 in Africa/Cairo and ends 1 October<br>
+**When** September and October reports are viewed<br>
+**Then** that complete BusinessDay, including all successful Payments and recorded Expenses assigned to it, is included in September only<br>
+**And** no portion is moved to October merely because its receipt timestamp or End Day occurs in October.
+
+### AC-US-REPORT-001-G — Cross-Year Start Attribution
+
+**Given** a BusinessDay starts 31 December in Africa/Cairo and ends 1 January<br>
+**When** either calendar Year is selected<br>
+**Then** the complete BusinessDay belongs to the starting year only<br>
+**And** an Invoice issued on an earlier BusinessDay still contributes no revenue until its successful Payment is recorded in the appropriate receipt BusinessDay.
 
 ---
 
